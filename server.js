@@ -14,7 +14,7 @@ app.get('/microsoft', function(req, res){
 	var fileToWrite = 'datamicrosoft.json';
 	writeData(fileToWrite, req, res);
 });
-app.get('/', function(req, res){
+app.all('*', function(req, res){
 	//var workshopName = req.path.replace(/\W/g, '');
 	//var fileName = './datamicrosoft.json';
 	var fileToWrite = 'data.json';
