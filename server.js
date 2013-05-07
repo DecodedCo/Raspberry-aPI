@@ -14,8 +14,13 @@ app.all('*', function(req, res){
     console.log('favicon requested');
     return;
   }
-	var workshopDate = req.path.replace(/\W/g, '');
-	var fileName = './data'+workshopDate+'.json'	
+
+  if (req.path != 'microsoft') {
+  	return;
+  }
+
+	var workshopName = req.path.replace(/\W/g, '');
+	var fileName = './data'+workshopName+'.json'	
 
 	// Read the data store
     fs.readFile(fileName, function(error, json){
