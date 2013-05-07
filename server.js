@@ -8,15 +8,25 @@ var express = require('express'),
 // Enable jsonP
 app.enable("jsonp callback");
 // Respond to get requests:
-app.get('/', function(req, res){
-
-
-
+app.get('/microsoft', function(req, res){
 	//var workshopName = req.path.replace(/\W/g, '');
-	var fileName = './datamicrosoft.json'	
+	//var fileName = './datamicrosoft.json';
+	var fileToWrite = 'datamicrosoft.json';
+	writeData(fileToWrite, req, res);
+});
+app.get('/', function(req, res){
+	//var workshopName = req.path.replace(/\W/g, '');
+	//var fileName = './datamicrosoft.json';
+	var fileToWrite = 'data.json';
+	writeData(fileToWrite, req, res);
+});
+
+app.listen(3000)
+
+function writeData(fileToWrite, req, res) {
 
 	// Read the data store
-    fs.readFile(fileName, function(error, json){
+    fs.readFile(fileToWrite, function(error, json){
     	// Log any errors
     	if (error) { console.log(error) };
         // Get the JSON contents and ensure it's JSON
@@ -42,7 +52,7 @@ app.get('/', function(req, res){
 	   			// Make the existingData JSON again:
     		var	newData = JSON.stringify(existingData);
 	    	// Write the new data to the JSON file 
-        	fs.writeFile(fileName, newData, function(error){
+        	fs.writeFile(fileToWrite, newData, function(error){
         		if (error) { console.log(error) }
         		else { console.log('The file was saved') }
         		// Output the JSON
@@ -57,5 +67,4 @@ app.get('/', function(req, res){
 			res.end();
         }
     });
-});
-app.listen(3000)
+}
