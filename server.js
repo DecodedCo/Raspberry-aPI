@@ -8,9 +8,17 @@ var express = require('express'),
 // Enable jsonP
 app.enable("jsonp callback");
 // Respond to get requests:
-app.get('/', function(req, res){
+app.all('*', function(req, res){
+
+ if (req.path === '/favicon.ico') {
+    console.log('favicon requested');
+    return;
+  }
+	var workshopDate = req.path.replace(/\W/g, '');
+	var fileName = './data'+workshopDate+'.json'	
+
 	// Read the data store
-    fs.readFile('./data.json', function(error, json){
+    fs.readFile(fileName, function(error, json){
     	// Log any errors
     	if (error) { console.log(error) };
         // Get the JSON contents and ensure it's JSON
@@ -36,7 +44,7 @@ app.get('/', function(req, res){
 	   			// Make the existingData JSON again:
     		var	newData = JSON.stringify(existingData);
 	    	// Write the new data to the JSON file 
-        	fs.writeFile('./data.json', newData, function(error){
+        	fs.writeFile(fileName, newData, function(error){
         		if (error) { console.log(error) }
         		else { console.log('The file was saved') }
         		// Output the JSON
