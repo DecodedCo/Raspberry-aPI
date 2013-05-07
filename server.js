@@ -8,19 +8,12 @@ var express = require('express'),
 // Enable jsonP
 app.enable("jsonp callback");
 // Respond to get requests:
-app.all('*', function(req, res){
+app.get('/', function(req, res){
 
- if (req.path === '/favicon.ico') {
-    console.log('favicon requested');
-    return;
-  }
 
-  if (req.path != 'microsoft') {
-  	return;
-  }
 
-	var workshopName = req.path.replace(/\W/g, '');
-	var fileName = './data'+workshopName+'.json'	
+	//var workshopName = req.path.replace(/\W/g, '');
+	var fileName = './datamicrosoft.json'	
 
 	// Read the data store
     fs.readFile(fileName, function(error, json){
