@@ -7,33 +7,52 @@ var express = require('express'),
 	app = express();
 // Enable jsonP
 app.enable("jsonp callback");
-// Respond to get requests:
-app.get('/microsoft', function(req, res){
-	//var workshopName = req.path.replace(/\W/g, '');
-	//var fileName = './datamicrosoft.json';
-	var fileToWrite = 'datamicrosoft.json';
-	writeData(fileToWrite, req, res);
-});
+// Respond to all requests:
+
 app.all('*', function(req, res){
-	//var workshopName = req.path.replace(/\W/g, '');
-	//var fileName = './datamicrosoft.json';
-	var fileToWrite = 'data.json';
-	writeData(fileToWrite, req, res);
+
+	// Get any data from the GET request using the URL module
+	url_parts = url.parse(req.url,true);
+	query = url_parts.query;
+	var username = "anonymous";
+	initialJSON = "";
+	if (query.username) {
+		username = query.username;
+		initialJSON = '"'+query.username+'"'+": 0";
+	}
+
+	var fileName = req.path.replace(/\W/g, '');
+	
+	if (fileName == 'faviconico') { return };
+	if (fileName === '') { writeData('data.json', req, res); return; };
+
+	fileName = fileName+'.json';
+	fs.exists('./data/'+fileName, function(exists){
+		if (exists) {
+			console.log('it exists');
+			writeData(fileName, req, res);
+		} else {
+			fs.writeFile('./data/'+fileName, '{'+ initialJSON +'}', function(){
+				console.log("Created file ./data/"+fileName);
+				writeData(fileName, req, res);
+				
+			})
+		}
+	})
 });
+
 
 app.listen(3000)
 
 function writeData(fileToWrite, req, res) {
 
 	// Read the data store
-    fs.readFile(fileToWrite, function(error, json){
+    fs.readFile('./data/'+fileToWrite, function(error, json){
     	// Log any errors
     	if (error) { console.log(error) };
         // Get the JSON contents and ensure it's JSON
     	var existingData = JSON.parse(json);
-		// Get any data from the GET request using the URL module
-		var url_parts = url.parse(req.url,true);
-		var query = url_parts.query;
+
 		// Only carry on if there is in fact data
 		if(query.username) { 
 			// Make it lowercase and get rid of non alphanumeric characters
@@ -52,7 +71,7 @@ function writeData(fileToWrite, req, res) {
 	   			// Make the existingData JSON again:
     		var	newData = JSON.stringify(existingData);
 	    	// Write the new data to the JSON file 
-        	fs.writeFile(fileToWrite, newData, function(error){
+        	fs.writeFile('./data/'+fileToWrite, newData, function(error){
         		if (error) { console.log(error) }
         		else { console.log('The file was saved') }
         		// Output the JSON
