@@ -15,9 +15,9 @@ var express = require('express'),
 
 app.enable("jsonp callback");
 
-// Respond to all requests:
+// api.decoded.co/checkin
 
-app.all('*', function(req, res){
+app.all('/checkin/*', function(req, res){
 
 	// Get any data from the GET request using the URL module
 
@@ -31,6 +31,8 @@ app.all('*', function(req, res){
 	}
 
 	var fileName = req.path.replace(/\W/g, '');
+	// strip out beginning of URL
+	fileName = fileName.replace(/^checkin/,'');
 	
 	if (fileName == 'faviconico') { return };
 	if (fileName === '') { writeData('default.json', req, res); return; };
@@ -38,19 +40,23 @@ app.all('*', function(req, res){
 	fileName = fileName+'.json';
 	fs.exists('./checkin/'+fileName, function(exists){
 		if (exists) {
-			console.log(fileName +' exists');
+			//console.log(fileName +' exists');
 			writeData(fileName, req, res);
 		} else {
 			fs.writeFile('./checkin/'+fileName, '{'+ initialJSON +'}', function(){
-				console.log("Created file "+fileName);
+				//console.log("Created file "+fileName);
 				writeData(fileName, req, res);
 				
 			})
 		}
 	})
 
-}); // end app.all()
+}); // end checkin 
 
+// Default -> redirect
+app.all('*', function(req,res) {
+	res.redirect('http://decoded.co');
+});
 
 app.listen(80)
 
@@ -98,13 +104,17 @@ function writeData(fileToWrite, req, res) {
         	
 			fs.writeFile('./checkin/'+fileToWrite, newData, function(error){
         			if (error) { console.log(error) }
-        			else { console.log('The file was saved') }
 
         			// Output the JSON
-		   			res.type('application/json');
-					res.jsonp(uniqueData);
-					res.end();	
+		   		res.type('application/json');
+				res.jsonp(uniqueData);
+				res.end();	
         		});
+
+			// Log the request 
+
+			console.log(req.ip + ',' + fileToWrite + ',' + username);	
+
         	} else {
         		// Output the JSON
     			res.type('application/json');
