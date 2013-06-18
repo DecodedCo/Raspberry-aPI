@@ -17,7 +17,7 @@ app.enable("jsonp callback");
 
 // api.decoded.co/checkin
 
-app.all('/checkin/*', function(req, res){
+app.all('/checkin*', function(req, res){
 
 	// Get any data from the GET request using the URL module
 
