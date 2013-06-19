@@ -15,9 +15,6 @@ var express = require('express'),
 // Initiate an Express instance
 	app = express();
 
-// Enable jsonP
-app.set('jsonp callback name', 'callback');
-
 /*
 	Twitter Checkins for CIAD2
 
@@ -27,6 +24,9 @@ app.set('jsonp callback name', 'callback');
 */
 
 app.all('/checkin*', function(req, res){
+
+	// Set jsonp callback - mirrored in form.js
+	app.set('jsonp callback name', 'callback');
 
 	// parse the URL request
 	var request = url.parse(req.url,true);
