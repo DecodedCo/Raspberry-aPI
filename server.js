@@ -62,7 +62,7 @@ app.all('/checkin*', function(req, res){
 			// if no query just return the file contents
 			var username = (query.username) ? query.username.replace(/\W/g,'').toLowerCase() : null;
 			
-			if (!username) return res.jsonp(data);
+			if (!username) return res.send(data);
 
 			// increment that username
 			data[username] = data.hasOwnProperty(username) ? data[username] + 1 : 1;
