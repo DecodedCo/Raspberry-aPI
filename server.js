@@ -68,14 +68,16 @@ app.all('/checkin*', function(req, res){
 			data[username] = data.hasOwnProperty(username) ? data[username] + 1 : 1;
 
 			// write the file
-			fs.writeFile('./checkin/' + filename , JSON.stringify(data) , function (err) {
-				if (err) errorHandler(res, err);
-			});
+			try {
+				fs.writeFileSync('./checkin/' + filename , JSON.stringify(data));
+			} catch (err) {
+				errorHandler(res, err);
+			};
 
 			// output username and number of checkins
 			var uniqueData = JSON.stringify({username: username, checkIns: data[username]});
-        	uniqueData = JSON.parse(uniqueData);
-        	res.jsonp(uniqueData);
+			uniqueData = JSON.parse(uniqueData);
+			res.jsonp(uniqueData);
 
 			// log the request
 			console.log(filename.replace(/.json/g,'') + ',' + username + ',' + data[username] + ',' + req.ip + ',' + req.headers['user-agent']);	
