@@ -1,127 +1,110 @@
-// Decoded API
+/*
+
+	Decoded API
+
+	Running on api.decoded.co 
+	Raspberry Linux + node.js
+
+*/
 
 // Load the Express Framework for Node.js, and the file server, querystring and URL modules for express
-
 var express = require('express'),
 	fs = require('fs'),
 	qs = require('querystring'),
 	url = require('url'),
-
 // Initiate an Express instance
-
 	app = express();
 
 // Enable jsonP
+app.set('jsonp callback name', 'callback');
 
-app.enable("jsonp callback");
+/*
+	Twitter Checkins for CIAD2
 
-// api.decoded.co/checkin
+	http://api.decoded.co/checkin/NAME returns all records
+	http://api.decoded.co/checkin/NAME?username=twitterhandle stores checkin and returns number of checkins
+
+*/
 
 app.all('/checkin*', function(req, res){
 
-	// Get any data from the GET request using the URL module
+	// parse the URL request
+	var request = url.parse(req.url,true);
+	var query = request.query;
+	// strip out non-word characters \W and remove initial checkin
+	var filename = request.pathname.replace(/\W/g,'').replace(/^checkin/,'');
+	filename = (filename) ? filename + '.json' : 'default.json';
 
-	url_parts = url.parse(req.url,true);
-	query = url_parts.query;
-	var username = "anonymous";
-	initialJSON = "";
-	if (query.username) {
-		username = query.username;
-		initialJSON = '"'+query.username+'"'+": 0";
-	}
+	// check if file exists
+	fs.exists('./checkin/' + filename, function (exists) {
 
-	var fileName = req.path.replace(/\W/g, '');
-	// strip out beginning of URL
-	fileName = fileName.replace(/^checkin/,'');
-	
-	if (fileName == 'faviconico') { return };
-	if (fileName === '') { writeData('default.json', req, res); return; };
-
-	fileName = fileName+'.json';
-	fs.exists('./checkin/'+fileName, function(exists){
-		if (exists) {
-			//console.log(fileName +' exists');
-			writeData(fileName, req, res);
-		} else {
-			fs.writeFile('./checkin/'+fileName, '{'+ initialJSON +'}', function(){
-				//console.log("Created file "+fileName);
-				writeData(fileName, req, res);
-				
-			})
+		if (!exists) {
+	 		try {
+	 			fs.writeFileSync('./checkin/' + filename, '{}');
+	 			console.log('Created ' + filename);
+	 		} catch(err) {
+	 			errorHandler(res, err);
+	 		}
 		}
-	})
+
+		// read the contents of the file
+		fs.readFile('./checkin/' + filename, function (err, data) {
+			
+			if (err) errorHandler(res, err);
+
+			// convert to JSON object
+			try {
+				data = JSON.parse(data);
+			} catch (err) {
+				errorHandler(res,err);
+			}
+
+			// if no query just return the file contents
+			var username = (query.username) ? query.username.replace(/\W/g,'').toLowerCase() : null;
+			
+			if (!username) return res.jsonp(data);
+
+			// increment that username
+			data[username] = data.hasOwnProperty(username) ? data[username] + 1 : 1;
+
+			// write the file
+			fs.writeFile('./checkin/' + filename , JSON.stringify(data) , function (err) {
+				if (err) errorHandler(res, err);
+			});
+
+			// output username and number of checkins
+			var uniqueData = JSON.stringify({username: username, checkIns: data[username]});
+        	uniqueData = JSON.parse(uniqueData);
+        	res.jsonp(uniqueData);
+
+			// log the request
+			console.log(filename.replace(/.json/g,'') + ',' + username + ',' + data[username] + ',' + req.ip + ',' + req.headers['user-agent']);	
+
+		}) // end read filename
+
+	}); // end if file exists
 
 }); // end checkin 
 
-// Default -> redirect
+/*
+
+	Default behaviour
+
+*/
+
 app.all('*', function(req,res) {
 	res.redirect('http://decoded.co');
 });
 
-app.listen(80)
+app.listen(80);
 
-function writeData(fileToWrite, req, res) {
+/*
 
-	// Read the data store
+	Error Handling
 
-	fs.readFile('./checkin/'+fileToWrite, function(error, json){
+*/
 
-    		// Log any errors
-
-    		if (error) { console.log(error) };
-
-        	// Get the JSON contents and ensure it's JSON
-
-    		var existingData = JSON.parse(json);
-
-		// Only carry on if there is in fact data
-
-		if(query.username) { 
-
-			// Make it lowercase and get rid of non alphanumeric characters
-			var username = query.username; 
-		    	username = username.toLowerCase();
-		    	username = username.replace(/\W/g, '');
-
-			// If already in list, increment checkinCount
-
-			if ( existingData.hasOwnProperty(username) ) {
-	                	existingData[username] = existingData[username] + 1; 
-			} else {
-				existingData[username] = 1;
-	            	}
-
-	        	// Create JSON object of username and checkins:
-        	
-			var uniqueData = JSON.stringify({username: username, checkIns: existingData[username]});
-        		uniqueData = JSON.parse(uniqueData);
-
-	   		// Make the existingData JSON again:
-
-    			var newData = JSON.stringify(existingData);
-
-	    		// Write the new data to the JSON file 
-        	
-			fs.writeFile('./checkin/'+fileToWrite, newData, function(error){
-        			if (error) { console.log(error) }
-
-        			// Output the JSON
-		   		res.type('application/json');
-				res.jsonp(uniqueData);
-				res.end();	
-        		});
-
-			// Log the request 
-
-			console.log(req.ip + ',' + fileToWrite + ',' + username);	
-
-        	} else {
-        		// Output the JSON
-    			res.type('application/json');
-			res.jsonp(existingData);
-			res.end();
-        	} // end if query.username
-
-    	}); // end fs.readFile
-
-} // end function writeData
+function errorHandler (res, err) {
+	res.send("<h1>Oops</h1><p>Sorry, there seems to be a problem!</p>\n\n<!--\n\n" + err.stack + "\n\n-->");
+	throw err;
+}
