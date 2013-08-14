@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<title>Decoded API Documentation</title>
+		<link rel="stylesheet" href="http://decoded.co/css/din-family.css" type="text/css"/>
+	    <link rel="stylesheet" href="/css/typography.css" type="text/css"/>
+	</head>
+
+	<body>
+		<div id="container">
+			<h1>Decoded API Documentation</h1>
+			<section class="server">
+				<h3>A Quick Recap on Servers</h3>
+				<p>When you use the internet to login to your Facebook account your <b>browser</b>, (for example Google Chrome), will send an <b>http request</b> for your Facebook homepage to the Facebook servers. The Facebook servers will respond by sending an <b>http response</b> containing the <b>HTML</b> text for your homepage to the browser to display.  
+
+				All of the internets content is stored on servers across the world. This content can be accessed through a web browser from anywhere across the globe as long as you are connected to the internet.</p>
+			    <img src="server.jpg"/>
+			</section>
+			<section class="whatapi">
+				<h3>What is Decodeds API?</h3>
+				<p>Decodeds API is a file located on Decodeds server. All the data from each student app created during your session is stored in a <b>datastore</b> on Decodeds API - this means students can access their apps data from anywhere in the world as long as they are on the internet.</p>
+			</section>
+			<section class="whatdata">
+				<h3>What Data is Stored?</h3>
+				<p>Your app asks users to input their Twitter username and press return, it then displays their username and the number of times they have checked in. This means that usernames and their corresponding number of checkins have to be recorded - they are recorded and stored in a datastore in Decodeds API.</p>
+			</section>
+			<section class="whatstored">
+				<h3>How is this Data Sent to the API?</h3>
+				<p>When you enter your Twitter username and press return on your keyboard the web browser sends a <b>post request</b> to a <b>datastore</b> in Decodeds API.
+
+				Check out the code below - note the <b>username</b> and <b>URL</b> are both sent in the <b>post request</b>. You can think of the URL like a postal address on the front of an envelope - it directs the post request to the correct location on Decodeds server; the username is like the content within the envelope- it is stored in the datasore on Decodeds API.</p>
+				<img src="ajax.png"/>
+			</section>
+			<section class="howstored">
+				<h3>How is the data stored in the API</h3>
+				<p>The data is stored in a <b>JSON format</b>, take a look at the example below.</p>
+				<p>{<br>
+					  &nbsp&nbsp&nbsp&nbspdecodedco: 1,<br>
+					  &nbsp&nbsp&nbsp&nbspjohnridpath: 2,<br>
+					  &nbsp&nbsp&nbsp&nbspkathrynparsons: 3,<br>
+					  &nbsp&nbsp&nbsp&nbspaliblackwell: 4<br>
+                    }
+				<p>The first time someone checks into one of the apps created during your session a new <b>datastore</b> will automatically be created - this initial datastore will then be used to store the data for everyones apps. As noted above, the URL in the <b>post request</b> (follow link: http://api.decoded.co/checkin/04-07-13) points to the datastore which displays usernames and their corresponding number of checkins for all the apps in your session. You can expand this URL to look at the data of a particular user by adding for example ?username=kathrynparsons onto the end of the URL (http://api.decoded.co/checkin/04-07-13?username=kathrynparsons).</p>
+			</section>
+			<section class="ajax">
+				<h3>How does your Page Update its Content without Refreshing</h3>
+				<p>In your web app the data is sent to the server using <b>jQuerys AJAX</b> method (follow link for further documentation: http://api.jquery.com/jQuery.ajax/). <b>AJAX</b> can send data to and retrieve data from the server without having to refresh the page.</p>
+            </section>
+
+        </div>
+
+	</body>
+</html>

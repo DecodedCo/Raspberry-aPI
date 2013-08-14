@@ -1,0 +1,447 @@
+/* Decoded Global Typography  */
+/* ==========================================================================
+   Base 
+   ========================================================================== */
+body {
+  font: 16px/1.45 em;
+  color: #1b1b1b;
+  font-size: 110%; }
+
+body, pre, select, input, textarea, text {
+  font-family: "DIN Next", Helvetica, Arial, sans-serif;
+  color: #1b1b1b; }
+
+html {
+  /*border-top: 0.5em solid $decodedYellow; */
+  padding-top: 0em; }
+
+/* ==========================================================================
+   Headings 
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal; }
+
+h1 {
+  text-decoration: none;
+  font-size: 2.2em;
+  font-family: "DIN Next-500";
+  margin: 0em auto 0.6em auto;
+  line-height: 1.2;
+  color: #010101; }
+
+/* Heading 2 */
+h2 {
+  text-decoration: none;
+  font-size: 1.8em;
+  font-family: "DIN Next-500";
+  margin: 0em auto 0.6em auto;
+  line-height: 1.2;
+  color: #010101; }
+
+header h2 {
+  letter-spacing: -1px; }
+
+h2 a:hover {
+  border-bottom: 1px solid transparent; }
+
+h2.article-name {
+  border-top: solid #fbf800 8px;
+  padding-top: 0.2em;
+  text-align: left;
+  top: 0em;
+  margin-top: 0em; }
+
+h2 + h3 {
+  font-weight: normal;
+  display: block;
+  line-height: 1.2em;
+  color: #969696;
+  font-family: "DIN Next", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: -0.6em; }
+
+h2.article-name + h3 {
+  text-align: left; }
+
+/* Heading 3 */
+h3 {
+  text-decoration: none;
+  font-size: 1.3em;
+  font-family: "DIN Next";
+  text-transform: none;
+  margin: 0em auto 0.6em auto;
+  line-height: 1.2;
+  color: #010101; }
+
+h4 {
+  font-family: "DIN Next-500";
+  font-weight: normal;
+  margin: 0em auto;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  color: #010101;
+  display: block;
+  clear: both; }
+
+h5 {
+  font-size: 0.875em;
+  margin: 1.5em 0em 1em;
+  font-weight: 600; }
+
+h6 {
+  font-size: 1em; }
+
+/* Extra heading */
+.small-bold {
+  font-family: "DIN Next-500";
+  font-weight: normal;
+  margin: 0em 0em 1em 0em;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+  color: #010101;
+  display: block;
+  clear: both;
+  font-size: 1em; }
+
+.line-title {
+  letter-spacing: -1px;
+  line-height: 1em;
+  width: 100%;
+  display: block;
+  text-align: left;
+  margin: 0em 0em 1em 0em;
+  font-family: "DIN Next-500"; }
+
+.headline {
+  font-size: 3.1em;
+  margin: 0em 0em 0.4em;
+  padding: 0em 0.3em;
+  background: #fef800;
+  background: rgba(254, 248, 0, 0.9);
+  border-bottom: none;
+  display: inline-block; }
+
+.course-name {
+  letter-spacing: 0px; }
+
+.trans-strip .headline.course-name {
+  background: none;
+  padding: 0em; }
+
+.article-heading {
+  padding: 0 0.3em;
+  background: #fef800;
+  background: rgba(254, 248, 0, 0.9); }
+
+.course-name span {
+  font-family: "DIN Next", Helvetica, Arial, sans-serif; }
+
+.fyi {
+  font-style: italic;
+  margin-top: 1em !important; }
+
+p.course-opener {
+  font-size: 2em;
+  text-align: left;
+  font-style: italic;
+  margin: 0em auto;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.45em; }
+
+/* ==========================================================================
+   Smaller text elements
+   ========================================================================== */
+p, li {
+  text-align: left;
+  font-weight: normal;
+  font-family: "DIN Next", Helvetica, Arial, sans-serif; }
+
+p, pre, blockquote, ul, ol, dl, figure, figcaption, table, fieldset {
+  font-size: 0.925em;
+  line-height: 1.45 em;
+  font-weight: normal;
+  margin: .75em 0;
+  font-family: "DIN Next", Helvetica, Arial, sans-serif; }
+
+p:first-child, h2 + p {
+  margin-top: 0em; }
+
+p.first-para {
+  font-size: 1em;
+  font-family: "DIN Next-500"; }
+
+i, cite, em, dfn {
+  text-transform: none;
+  font-weight: inherit;
+  font-style: italic; }
+
+strong i, strong cite, strong em, strong dfn {
+  font-weight: inherit; }
+
+caption {
+  color: #666;
+  font-size: 0.9333em;
+  line-height: 1.1429;
+  caption-side: bottom;
+  padding: 1.1429em 0 0.5714em;
+  text-align: left; }
+
+ul.widget-bullet {
+  padding-left: 1.1em; }
+
+blockquote {
+  position: relative;
+  display: block;
+  padding: 0em;
+  font-style: italic;
+  font-size: 1em;
+  margin: 0;
+  padding-left: 1.8em; }
+
+.quotebig blockquote {
+  padding-left: 0em; }
+
+blockquote:before {
+  display: block;
+  height: 0;
+  content: "â€œ";
+  margin: 0 0 0 -0.68em;
+  font-size: 4em;
+  position: absolute;
+  top: -0.32em;
+  font-weight: 300;
+  font-family: "Times";
+  color: rgba(100, 100, 100, 0.2);
+  text-rendering: auto; }
+
+/* Quote meta */
+blockquote p {
+  font-family: "DIN Next-400";
+  font-weight: normal;
+  position: relative;
+  margin-bottom: 0; }
+
+.quotebig blockquote {
+  font-size: 1.4em; }
+
+p.quoth {
+  text-align: right;
+  line-height: 1.4em;
+  margin: 0; }
+
+p.quoth span {
+  display: inline-block; }
+
+p.quoth .clientname {
+  text-transform: uppercase;
+  display: block; }
+
+p.quoth .company {
+  font-family: "DIN Next-500";
+  font-weight: normal; }
+
+p.quoth .date {
+  text-transform: uppercase;
+  display: block; }
+
+p.quoth .url {
+  display: block; }
+
+.small-caps {
+  font-variant: small-caps;
+  font-size: 1.3em;
+  line-height: 0.8em; }
+
+strong {
+  font-family: "DIN Next-500"; }
+
+.amp {
+  font-family: Palatino, 'Palatino Linotype', 'Baskerville', 'DIN Next';
+  font-style: italic;
+  font-weight: normal; }
+
+.img-circle, .team-grid img {
+  -webkit-border-radius: 500px;
+  -moz-border-radius: 500px;
+  border-radius: 500px;
+  max-height: 500px; }
+
+/* ==========================================================================
+   Hyperlinks
+   ========================================================================== */
+a {
+  font-style: normal;
+  color: #1b1b1b;
+  text-decoration: none;
+  text-decoration: none;
+  border-bottom: none; }
+
+a:hover {
+  text-decoration: none;
+  color: black;
+  border-bottom: none; }
+
+a.button {
+  float: right;
+  cursor: pointer;
+  padding: 0 0 0em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid #969696;
+  margin-right: 0.3em; }
+
+a.button:hover {
+  border-bottom: 2px solid #000; }
+
+a.button:after {
+  content: "Â»";
+  padding-left: 0.3em; }
+
+a.opps {
+  color: green;
+  font-family: "DIN Next-500"; }
+
+h1 a, h2 a, h3 a {
+  font-family: "DIN Next-500";
+  color: #010101;
+  text-decoration: none;
+  border-bottom: none; }
+
+p a, li a {
+  color: #010101;
+  border-bottom: 1px solid #969696; }
+
+p a:hover, li a:hover {
+  border-bottom: 1px solid black; }
+
+/* ==========================================================================
+   Images & Video
+   ========================================================================== */
+figure.banner {
+  position: relative; }
+
+figure.wide img {
+  width: 100%; }
+
+.video-wrapper {
+  position: relative;
+  margin: 0 0 15px 0;
+  padding-bottom: 51%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden; }
+
+.video-wrapper iframe,
+.video-wrapper object,
+.video-wrapper embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+
+/* ==========================================================================
+   Table
+   ========================================================================== */
+table {
+  color: #1b1b1b;
+  font-size: 0.9375em;
+  line-height: 1.6;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+table th,
+table td {
+  text-align: left;
+  vertical-align: middle;
+  border-top: 1px solid #dddddd; }
+
+th {
+  font-family: "DIN Next-500";
+  font-weight: normal; }
+
+table caption + thead tr:first-child th,
+table caption + thead tr:first-child td,
+table colgroup + thead tr:first-child th,
+table colgroup + thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+  border-top: 0; }
+
+th {
+  color: #1b1b1b;
+  border-bottom-color: rgba(100, 100, 100, 0.1); }
+
+td, th {
+  text-align: left;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+  padding: 0.2667em 1.0667em 0.2em 0; }
+
+table, td, tr {
+  margin: 0;
+  padding: 0; }
+
+td, td img {
+  vertical-align: top; }
+
+td, th {
+  border-bottom: none; }
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+input[type="text"] {
+  padding: 0.3em 0.5em; }
+
+textarea {
+  width: 100%;
+  padding: 0.5em 0.5em; }
+
+input[type="submit"] {
+  margin: 0em;
+  float: none;
+  width: 100%;
+  padding: 0.45em;
+  background: #fbf800;
+  border: solid #969696 1px;
+  font-family: "DIN Next-500";
+  font-weight: normal;
+  text-transform: uppercase;
+  width: 31%;
+  height: 100%;
+  float: right; }
+
+/* ==========================================================================
+   Other
+   ========================================================================== */
+hr {
+  text-align: center;
+  border: 0;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+  display: block;
+  font-size: 1em;
+  float: none !important;
+  display: block !important;
+  margin: 1em auto;
+  clear: both; }
+
+/***** Mobile (portrait) *****/
+@media only screen and (max-width: 767px) {
+  .headline {
+    margin-top: 0em; }
+
+  h2.course-name, h2.article-name {
+    top: 0em;
+    text-align: left; }
+
+  h2.article-name + h3 {
+    text-align: left; }
+
+  .quotebig blockquote {
+    padding-left: 1.5em; } }

@@ -1,0 +1,23 @@
+body{
+	border-top: 34px solid yellow;
+    font: 100%/1.45 em;
+}
+
+#container{
+	position: relative;
+	overflow-x: auto;
+	width: 700px;
+	margin: auto;
+	padding: 42px 50px;
+	background: rgba(255,255,255,.9);
+	text-align: left;
+	border-top: none;
+	border-bottom: none;
+	box-shadow: 0px 3px 15px rgba(200,200,200,.4);
+	margin-top: -34px;
+	font-family: "DIN Next", Helvetica, Arial, sans-serif;
+}
+
+b{
+	text-decoration:underline;
+}
