@@ -3,51 +3,74 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<title>Decoded API Documentation</title>
 		<link rel="stylesheet" href="http://decoded.co/css/din-family.css" type="text/css"/>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
 	    <link rel="stylesheet" href="/css/typography.css" type="text/css"/>
+	   <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+       <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+
 	</head>
 
 	<body>
 		<div id="container">
 			<h1>Decoded API Documentation</h1>
-			<section class="server">
-				<h3>A Quick Recap on Servers</h3>
-				<p>When you use the internet to login to your Facebook account your <b>browser</b>, (for example Google Chrome), will send an <b>http request</b> for your Facebook homepage to the Facebook servers. The Facebook servers will respond by sending an <b>http response</b> containing the <b>HTML</b> text for your homepage to the browser to display.  
-
-				All of the internets content is stored on servers across the world. This content can be accessed through a web browser from anywhere across the globe as long as you are connected to the internet.</p>
-			    <img src="server.jpg"/>
-			</section>
-			<section class="whatapi">
+			<section class="api">
 				<h3>What is Decodeds API?</h3>
-				<p>Decodeds API is a file located on Decodeds server. All the data from each student app created during your session is stored in a <b>datastore</b> on Decodeds API - this means students can access their apps data from anywhere in the world as long as they are on the internet.</p>
+				<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co</b> is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer/server? that you can buy for $25.</p>
+				<img src="raspberry_pie.jpg"/>
+				<p>With a few lines of code, your app can send data to this server to be stored. It can also pull data down from the server to be displayed in your app.</p>
 			</section>
-			<section class="whatdata">
-				<h3>What Data is Stored?</h3>
-				<p>Your app asks users to input their Twitter username and press return, it then displays their username and the number of times they have checked in. This means that usernames and their corresponding number of checkins have to be recorded - they are recorded and stored in a datastore in Decodeds API.</p>
+			<section class="data_stored">
+				<h3>What data is stored in the API?</h3>
+				<p>Your app asks users to input their Twitter username and press return, it then displays their username and the number of times they have checked in. For this to work, we need to store a list of usernames with a corresponding number of checkins.</p>
 			</section>
-			<section class="whatstored">
-				<h3>How is this Data Sent to the API?</h3>
-				<p>When you enter your Twitter username and press return on your keyboard the web browser sends a <b>post request</b> to a <b>datastore</b> in Decodeds API.
-
-				Check out the code below - note the <b>username</b> and <b>URL</b> are both sent in the <b>post request</b>. You can think of the URL like a postal address on the front of an envelope - it directs the post request to the correct location on Decodeds server; the username is like the content within the envelope- it is stored in the datasore on Decodeds API.</p>
-				<img src="ajax.png"/>
-			</section>
-			<section class="howstored">
-				<h3>How is the data stored in the API</h3>
+			<section class="how_stored">
+				<h3>How is the data stored in the API?</h3>
 				<p>The data is stored in a <b>JSON format</b>, take a look at the example below.</p>
-				<p>{<br>
-					  &nbsp&nbsp&nbsp&nbspdecodedco: 1,<br>
-					  &nbsp&nbsp&nbsp&nbspjohnridpath: 2,<br>
-					  &nbsp&nbsp&nbsp&nbspkathrynparsons: 3,<br>
-					  &nbsp&nbsp&nbsp&nbspaliblackwell: 4<br>
-                    }
-				<p>The first time someone checks into one of the apps created during your session a new <b>datastore</b> will automatically be created - this initial datastore will then be used to store the data for everyones apps. As noted above, the URL in the <b>post request</b> (follow link: http://api.decoded.co/checkin/04-07-13) points to the datastore which displays usernames and their corresponding number of checkins for all the apps in your session. You can expand this URL to look at the data of a particular user by adding for example ?username=kathrynparsons onto the end of the URL (http://api.decoded.co/checkin/04-07-13?username=kathrynparsons).</p>
-			</section>
-			<section class="ajax">
-				<h3>How does your Page Update its Content without Refreshing</h3>
-				<p>In your web app the data is sent to the server using <b>jQuerys AJAX</b> method (follow link for further documentation: http://api.jquery.com/jQuery.ajax/). <b>AJAX</b> can send data to and retrieve data from the server without having to refresh the page.</p>
+				<p><pre><code>{
+    decodedco: 1, 
+    johnridpath: 2,
+    kathrynparsons: 3,
+    aliblackwell: 4
+}</code></pre></p>
             </section>
+            <section class="how_stored">
+				<h3>Where is the data stored in the API?</h3>
+				<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13</b>
 
-        </div>
+				The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.
 
+				To make a checkin, you can append a query to this URL using the "username" parameter. For example:
+
+				<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons</b></p>
+            </section>
+			<section class="whatstored">
+				<h3>Submitting data from your app</h3>
+				<p>You have a few options as to how you might submit data to a datastore in this api.</p>
+				<h5>1) Form</h5>
+				<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
+                
+                <pre><code><form action="http://api.decoded.co/checkin/04-07-13">
+                                  <input type="text" name="username">
+	            </form></pre></code>
+
+	            <h5>2) AJAX</h5>
+	            <p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
+                
+                <pre><code>$.ajax({
+    url: 'http://api.decoded.co/checkin/04-07-13',
+    data: {username: "DecodedCo"},
+    method: 'POST',
+    dataType: 'jsonp',
+    jsonp: 'callback',
+    jsonpCallback: 'jsonpCallback',
+    success: function(data){
+        console.log(data);
+    }
+});</pre></code>
+			</section>
+			<footer>
+			    <p>For more information, please read the jQuery .ajax() documentation (<b class="api_link")>http://api.jquery.com/jQuery.ajax/</b>).</p>
+
+			    <p>If you have any questions about this API, please contact info@decoded.co.</p>
 	</body>
 </html>

@@ -21,3 +21,13 @@ body{
 b{
 	text-decoration:underline;
 }
+
+.api img{
+	width:30%;
+	margin-left:25%;
+	padding:2%;
+}
+
+.api_link{
+	color:blue;	
+}
