@@ -11,52 +11,52 @@
 	</head>
 
 	<body>
-		<div id="container">
-			<h1>Decoded API Documentation</h1>
-			<section class="api">
-				<h3>What is Decodeds API?</h3>
-				<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co</b> is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer/server? that you can buy for $25.</p>
-				<img src="raspberry_pie.jpg"/>
-				<p>With a few lines of code, your app can send data to this server to be stored. It can also pull data down from the server to be displayed in your app.</p>
-			</section>
-			<section class="data_stored">
-				<h3>What data is stored in the API?</h3>
-				<p>Your app asks users to input their Twitter username and press return, it then displays their username and the number of times they have checked in. For this to work, we need to store a list of usernames with a corresponding number of checkins.</p>
-			</section>
-			<section class="how_stored">
-				<h3>How is the data stored in the API?</h3>
-				<p>The data is stored in a <b>JSON format</b>, take a look at the example below.</p>
+	  <div id="container">
+		<h1>Decoded API Documentation</h1>
+		  <section class="api">
+			<h3>What is Decodeds API?</h3>
+			<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co</b> is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer/server? that you can buy for $25.</p>
+			<img src="raspberry_pie.jpg"/>
+			<p>With a few lines of code, your app can send data to this server to be stored. It can also pull data down from the server to be displayed in your app.</p>
+		  </section>
+		  <section class="data_stored">
+			<h3>What data is stored in the API?</h3>
+			<p>Your app asks users to input their Twitter username and press return, it then displays their username and the number of times they have checked in. For this to work, we need to store a list of usernames with a corresponding number of checkins.</p>
+		  </section>
+		  <section class="how_stored">
+			<h3>How is the data stored in the API?</h3>
+			<p>The data is stored in a <b>JSON format</b>, take a look at the example below.</p>
 				<p><pre><code>{
     decodedco: 1, 
     johnridpath: 2,
     kathrynparsons: 3,
     aliblackwell: 4
 }</code></pre></p>
-            </section>
-            <section class="how_stored">
-				<h3>Where is the data stored in the API?</h3>
-				<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13</b>
+          </section>
+          <section class="how_stored">
+			<h3>Where is the data stored in the API?</h3>
+			<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13</b>
 
-				The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.
+			The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.
 
-				To make a checkin, you can append a query to this URL using the "username" parameter. For example:
+			To make a checkin, you can append a query to this URL using the "username" parameter. For example:
 
-				<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons</b></p>
-            </section>
-			<section class="whatstored">
-				<h3>Submitting data from your app</h3>
-				<p>You have a few options as to how you might submit data to a datastore in this api.</p>
-				<h5>1) Form</h5>
-				<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
+			<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons</b></p>
+          </section>
+		  <section class="whatstored">
+			<h3>Submitting data from your app</h3>
+			<p>You have a few options as to how you might submit data to a datastore in this api.</p>
+			<h5>1) Form</h5>
+			<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
                 
                 <pre><code><form action="http://api.decoded.co/checkin/04-07-13">
                                   <input type="text" name="username">
 	            </form></pre></code>
 
-	            <h5>2) AJAX</h5>
-	            <p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
+	        <h5>2) AJAX</h5>
+	        <p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
                 
-                <pre><code>$.ajax({
+            <pre><code>$.ajax({
     url: 'http://api.decoded.co/checkin/04-07-13',
     data: {username: "DecodedCo"},
     method: 'POST',
@@ -67,10 +67,12 @@
         console.log(data);
     }
 });</pre></code>
-			</section>
-			<footer>
+		  </section>
+		  <footer>
 			    <p>For more information, please read the jQuery .ajax() documentation (<b class="api_link")>http://api.jquery.com/jQuery.ajax/</b>).</p>
 
 			    <p>If you have any questions about this API, please contact info@decoded.co.</p>
+		  </footer>
+		</div>
 	</body>
 </html>
