@@ -15,7 +15,7 @@
 		<h1>Decoded API Documentation</h1>
 		  <section class="api">
 			<h3>What is Decodeds API?</h3>
-			<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co</b> is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer/server? that you can buy for $25.</p>
+			<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co </b>is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer (a computer is a server) that you can buy for $25.</p>
 			<img src="raspberry_pie.jpg"/>
 			<p>With a few lines of code, your app can send data to this server to be stored. It can also pull data down from the server to be displayed in your app.</p>
 		  </section>
@@ -35,13 +35,13 @@
           </section>
           <section class="how_stored">
 			<h3>Where is the data stored in the API?</h3>
-			<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13</b>
+			<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13.</b><br><br>
 
-			The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.
+			The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.<br><br>
 
 			To make a checkin, you can append a query to this URL using the "username" parameter. For example:
 
-			<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons</b></p>
+			<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons.</b></p>
           </section>
 		  <section class="whatstored">
 			<h3>Submitting data from your app</h3>
@@ -49,9 +49,9 @@
 			<h5>1) Form</h5>
 			<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
                 
-                <pre><code><form action="http://api.decoded.co/checkin/04-07-13">
-                                  <input type="text" name="username">
-	            </form></pre></code>
+                <pre><code>&lt;form action="http://api.decoded.co/checkin/04-07-13"&gt;
+    &lt;input type="text" name="username"&gt;
+&lt;/form&gt;</pre></code>
 
 	        <h5>2) AJAX</h5>
 	        <p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
