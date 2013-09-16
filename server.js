@@ -140,7 +140,7 @@ app.all('*', function(req,res) {
 	res.redirect('http://decoded.co');
 });
 
-app.listen(50000);
+app.listen(80);
 
 /*
 
