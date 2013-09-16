@@ -5,15 +5,22 @@
 	Running on api.decoded.co 
 	Raspberry Linux + node.js
 
+	Checkin for Code in a Day
+	Google filter for Data Viz in a Day
+
 */
 
-// Load the Express Framework for Node.js, and the file server, querystring and URL modules for express
+// Load required libraries
 var express = require('express'),
 	fs = require('fs'),
 	qs = require('querystring'),
 	url = require('url'),
-// Initiate an Express instance
+	request = require('request'),
+	csv = require('csv'),	
 	app = express();
+
+// Set jsonp callback - mirrored in javascript calls
+app.set('jsonp callback name', 'callback');
 
 /*
 	Twitter Checkins for CIAD2
@@ -25,14 +32,11 @@ var express = require('express'),
 
 app.all('/checkin*', function(req, res){
 
-	// Set jsonp callback - mirrored in form.js
-	app.set('jsonp callback name', 'callback');
-
 	// parse the URL request
-	var request = url.parse(req.url,true);
-	var query = request.query;
+	var thisRequest = url.parse(req.url,true);
+	var query = thisRequest.query;
 	// strip out non-word characters \W and remove initial checkin
-	var filename = request.pathname.replace(/\W/g,'').replace(/^checkin/,'');
+	var filename = thisRequest.pathname.replace(/\W/g,'').replace(/^checkin/,'');
 	filename = (filename) ? filename + '.json' : 'default.json';
 
 	// check if file exists
@@ -87,6 +91,38 @@ app.all('/checkin*', function(req, res){
 	}); // end if file exists
 
 }); // end checkin 
+
+/*
+
+	Google spreadsheet CSV to JSON
+	Data Visualisation in a Day
+
+*/
+
+app.all('/cleanGoogle*', function(req, res){
+
+	// Parse the URL for a key
+	var thisRequest = url.parse(req.url,true);
+	var key = thisRequest.pathname.replace(/\W/g,'').replace(/^cleanGoogle/,'');
+	if (key.length==0) {
+		res.send(404,"No key specified.");
+		return;
+	}
+
+	// Grab the document from Google Docs
+	request('https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&single=true&gid=0&output=csv&key=' + key, function (error, response, body) {
+		
+		if (!error && response.statusCode == 200) {
+			// convert csv to JSON
+			csv().from(body,{columns: true}).to.array( function (data) { 
+				res.jsonp(data);
+			});
+		} else {
+			res.send(response.statusCode,body);
+		}
+	});
+
+});
 
 /*
 

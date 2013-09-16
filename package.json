@@ -1,0 +1,25 @@
+{
+  "name": "api.decoded.co",
+  "version": "0.0.2",
+  "description": "Decoded API for Code in a Day and Data Viz in a Day",
+  "main": "server.js",
+  "dependencies": {
+    "csv": "~0.3.6",
+    "express": "~3.4.0",
+    "request": "~2.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DecodedCo/api.decoded.co.git"
+  },
+  "author": "Decoded",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/DecodedCo/api.decoded.co/issues"
+  }
+}
