@@ -120,7 +120,13 @@ app.all('/cleanGoogle*', function(req, res){
 		} else {
 			res.send(response.statusCode,body);
 		}
+		
+		// log the request
+		console.log(key + ',' + response.statusCode + ',' + req.ip + ',' + req.headers['user-agent']);	
+
 	});
+
+
 
 });
 
@@ -134,7 +140,7 @@ app.all('*', function(req,res) {
 	res.redirect('http://decoded.co');
 });
 
-app.listen(80);
+app.listen(50000);
 
 /*
 
