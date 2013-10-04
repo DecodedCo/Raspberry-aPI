@@ -1,4 +1,5 @@
 var url = require('url'),
+  fs = require('fs'),
   request = require('request'),
   csv = require('csv');
 
@@ -19,18 +20,54 @@ module.exports = function setupCleanGoogle(app) {
     return 'https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&single=true&gid=0&output=csv&key=' + key;
   }
 
-  function getData(key, res, req, callback) {
-    request(getURL(key), function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        // csv -> json:
-        csv().from(body, {columns: true}).to.array(callback);
-      } else {
-        res.send(response.statusCode, body);
-      }
+  var cached = {},
+    day = 86400000;
 
-      // Log the request
-      console.log(url + ', ' + response.statusCode + ', ' + req.ip + ', ' + req.headers['user-agent']);
-    });
+  function getData(key, res, req, callback) {
+    if (cached[key] && Date.now() < cached[key].expires) {
+      fs.readFile(cached[key].file, {encoding: 'utf8'}, function(err, data) {
+        // If there's an error, try to get the data from the proper place:
+        if (err) {
+          cached[key] = undefined;
+          getData(key, res, req, callback);
+          return;
+        }
+
+        console.log("Retrieved " + key + " from cache.");
+
+        callback(JSON.parse(data));
+      });
+    } else {
+      request(getURL(key), function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+          // csv -> json:
+          csv().from(body, {columns: true}).to.array(function(data) {
+            callback(data);
+
+            // cache the data:
+            var file = './data/google-cache/' + key;
+            fs.writeFile(file, JSON.stringify(data), function(err) {
+              if (err) {
+                console.log("Error saving to cache: " + err);
+                return;
+              }
+
+              cached[key] = {
+                expires: Date.now() + day,
+                file: file
+              };
+
+              console.log(key + " saved to cache.");
+            });
+          });
+        } else {
+          res.send(response.statusCode, body);
+        }
+
+        // Log the request
+        console.log(url + ', ' + response.statusCode + ', ' + req.ip + ', ' + req.headers['user-agent']);
+      });
+    }
   }
 
   function cleanGoogleListener(req, res) {
