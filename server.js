@@ -14,6 +14,7 @@ var express = require('express'),
   url = require('url'),
   request = require('request'),
   csv = require('csv'),
+  store = require('nstore').extend(require('nstore/query')()),
   app = express();
 
 // Set jsonp callback - mirrored in javascript calls
@@ -40,77 +41,58 @@ app.all('/checkin*', function (req, res) {
   var reqUrl = url.parse(req.url, true),
     query = reqUrl.query,
   // strip out non-word characters \W and remove initial checkin
-    filename = reqUrl.pathname.replace(/\W/g, '').replace(/^checkin/, '');
+    dbName = reqUrl.pathname.replace(/\W/g, '').replace(/^checkin/, ''),
+    db;
 
-  if (filename) {
-    filename += '.json';
+  if (dbName) {
+    dbName += '.db';
   } else {
-    filename = 'default.json';
+    dbName = 'default.db';
   }
 
-  // check if file exists
-  fs.exists('./checkin/' + filename, function (exists) {
-    if (!exists) {
-      try {
-        fs.writeFileSync('./checkin/' + filename, '{}');
-        console.log('Created ' + filename);
-      } catch (e) {
-        errorHandler(res, e);
-      }
-    }
+  db = store.new('./checkin/' + dbName, function () {
+    if (query.username) {
+      // User specific stuff.
+      var username = query.username.replace(/\W/g, '').toLowerCase();
 
-    // read the contents of the file
-    fs.readFile('./checkin/' + filename, function (err, data) {
-      var username, uniqueData;
+      db.get(username, function (err, checkIns) {
+        if (err) {
+          // Username doesn't exist, create a document for the user
+          db.save(username, 1, function (err) {
+            if (err) {
+              errorHandler(res, err);
+              return;
+            }
 
-      if (err) {
-        errorHandler(res, err);
-      }
+            res.jsonp({
+              username: username,
+              checkIns: 1
+            });
+          });
+        } else {
+          db.save(username, checkIns + 1, function (err) {
+            if (err) {
+              errorHandler(res, err);
+              return;
+            }
 
-      // convert to JSON object
-      try {
-        data = JSON.parse(data);
-      } catch (e) {
-        errorHandler(res, e);
-      }
-
-      // if no query just return the file contents
-      if (query.username) {
-        username = query.username.replace(/\W/g, '').toLowerCase();
-      } else {
-        username = null;
-      }
-
-      if (!username) {
-        return res.send(data);
-      }
-
-      // increment that username
-      if (data.hasOwnProperty(username)) {
-        data[username] += 1;
-      } else {
-        data[username] = 1;
-      }
-
-      // write the file
-      try {
-        fs.writeFileSync('./checkin/' + filename, JSON.stringify(data));
-      } catch (e) {
-        errorHandler(res, e);
-      }
-
-      // output username and number of checkins
-      uniqueData = JSON.stringify({
-        username: username,
-        checkIns: data[username]
+            res.jsonp({
+              username: username,
+              checkIns: checkIns + 1
+            });
+          });
+        }
       });
+    } else {
+      // Send all results
+      db.all(function (err, results) {
+        if (err) {
+          return errorHandler(res, err);
+        }
 
-      uniqueData = JSON.parse(uniqueData);
-      res.jsonp(uniqueData);
-
-      // log the request
-      console.log(filename.replace(/\.json/g, '') + ',' + username + ',' + data[username] + ',' + req.ip + ',' + req.headers['user-agent']);
-    });
+        res.jsonp(results);
+      });
+    }
   });
 });
 
