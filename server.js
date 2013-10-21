@@ -47,4 +47,4 @@ app.all('*', function (req, res) {
   res.redirect('http://decoded.co');
 });
 
-app.listen(80);
+app.listen(8002);
