@@ -18,10 +18,10 @@ module.exports = function setupCheckins(app, errorHandler) {
     var dbName = url.pathname.replace(/\W/g, '').replace(/^checkin/, '');
 
     if (dbName) {
-      return dbName + '.db.json';
+      return dbName + '.json';
     }
 
-    return 'default.db.json';
+    return 'default.json';
   }
 
   // Save the checkins into the user's document in db, the send the result to res
@@ -74,7 +74,7 @@ module.exports = function setupCheckins(app, errorHandler) {
 
       // log the request
       console.log(
-        dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
+        dbName.replace(/.json$/g, '').replace(/^\.\/data\//g, '') + ',' +
         username + ',' +
         checkIns + ',' +
         req.ip + ',' +
