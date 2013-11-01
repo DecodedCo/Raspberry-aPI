@@ -80,11 +80,20 @@ module.exports = function() {
   };
 
   Store.prototype.get = function(dbname, property) {
+    // Fetch stuff out of _store, with sensible defaults for when the requested stuff doesn't exist
     if (property === undefined) {
-      return this._store[dbname];
+      if (this._store[dbname] === undefined) {
+        return {};
+      } else {
+        return this._store[dbname];
+      }
     }
 
-    return this._store[dbname][property];
+    if (this._store[dbname] && this._store[dbname][property]) {
+      return this._store[dbname][property];
+    } else {
+      return undefined;
+    }
   };
 
   return Store;

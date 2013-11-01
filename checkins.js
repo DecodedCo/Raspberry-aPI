@@ -1,5 +1,5 @@
 var url = require('url'),
-  store = require('nstore').extend(require('nstore/query')());
+  Store = require('./store');
 
 /*
   Twitter Checkins for CIAD2
@@ -11,96 +11,78 @@ var url = require('url'),
 module.exports = function setupCheckins(app, errorHandler) {
   'use strict';
 
+  var store = new Store('data/checkins', 30);
+
   // Get the db name from the url path. Strip non-word characters and 'checkin/' from the start
   function getDbName(url) {
     var dbName = url.pathname.replace(/\W/g, '').replace(/^checkin/, '');
 
     if (dbName) {
-      return './data/checkins/' + dbName + '.db';
+      return dbName + '.db.json';
     }
 
-    return './data/checkins/default.db';
+    return 'default.db.json';
   }
 
   // Save the checkins into the user's document in db, the send the result to res
   function saveAndSendCheckin(user, checkIns, db, res) {
-    db.save(user, checkIns, function (err) {
-      if (err) {
-        errorHandler(res, err);
-        return;
-      }
+    store.save(db, user, checkIns);
 
-      try {
-        res.jsonp({
-          username: user,
-          checkIns: checkIns
-        });
-      } catch (e) {
-        errorHandler(res, e);
-      }
-    });
+    try {
+      res.jsonp({
+        username: user,
+        checkIns: checkIns
+      });
+    } catch (e) {
+      errorHandler(res, e);
+    }
   }
 
   // Send everything from db to res by jsonp
   function sendAll(db, res) {
-    db.all(function (err, results) {
-      if (err) {
-        return errorHandler(res, err);
-      }
+    var results = store.get(db);
 
-      try {
-        res.jsonp(results);
-      } catch (e) {
-        errorHandler(res, e);
-      }
-    });
+    try {
+      res.jsonp(results);
+    } catch (e) {
+      errorHandler(res, e);
+    }
   }
 
   // When a checkin request comes in,
   function checkinListener(req, res) {
     var reqUrl = url.parse(req.url, true),
       dbName = getDbName(reqUrl),
-      storeNewCallback = true,
-      db;
+      storeNewCallback = true;
 
-    db = store.new(dbName, function () {
+    if (reqUrl.query.username) {
+      var username = reqUrl.query.username.replace(/\W/g, '').toLowerCase();
 
-      // bug in nstore which triggers callback twice
-      if (storeNewCallback) {
+      // Try to fetch the user's checkins. If there's an error, that user doesn't exist.
+      var checkIns = store.get(dbName, username);
 
-        storeNewCallback = false;
+      if (checkIns === undefined) {
+        // user doesn't exist, their first checkin
+        checkIns = 1;
+      } else {
+        // user exists, increase their checkins
+        checkIns++;
+      } // end err
 
-        if (reqUrl.query.username) {
-          var username = reqUrl.query.username.replace(/\W/g, '').toLowerCase();
+      // check the user in
+      saveAndSendCheckin(username, checkIns, dbName, res);
 
-          // Try to fetch the user's checkins. If there's an error, that user doesn't exist.
-          db.get(username, function (err, checkIns) {
-        
-            if (err) {
-              // user doesn't exist, their first checkin
-              checkIns = 1;
-            } else {
-              // user exists, increase their checkins
-              checkIns++;
-            } // end err
+      // log the request
+      console.log(
+        dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
+        username + ',' +
+        checkIns + ',' +
+        req.ip + ',' +
+        req.headers['user-agent']);
 
-            // check the user in
-            saveAndSendCheckin(username, checkIns, db, res);
-
-            // log the request
-            console.log(
-              dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
-              username + ',' +
-              checkIns + ',' +
-              req.ip + ',' +
-              req.headers['user-agent']);
-          }); // end db.get
-
-        } else {
-          sendAll(db, res);
-        } // end if username specified
-      } // end if storeCallback set
-    }); // end store.new
+    } else {
+      sendAll(dbName, res);
+    } // end if username specified
   } // end checkin listener
 
   app.all('/checkin*', checkinListener);

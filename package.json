@@ -7,7 +7,8 @@
     "csv": "~0.3.6",
     "express": "~3.4.0",
     "request": "~2.27.0",
-    "nstore": "~0.5.2"
+    "nstore": "~0.5.2",
+    "async": "~0.2.9"
   },
   "devDependencies": {},
   "scripts": {
