@@ -32,6 +32,11 @@ app.set('jsonp callback name', 'callback');
 
 app.all('/checkin*', function(req, res){
 
+	// Access Control Origin
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+
 	// parse the URL request
 	var thisRequest = url.parse(req.url,true);
 	var query = thisRequest.query;
@@ -101,6 +106,11 @@ app.all('/checkin*', function(req, res){
 
 app.all('/cleanGoogle*', function(req, res){
 
+	// Access Control Origin
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	
 	// Parse the URL for a key
 	var thisRequest = url.parse(req.url,true);
 	var key = thisRequest.pathname.replace(/\W/g,'').replace(/^cleanGoogle/,'');
