@@ -15,10 +15,10 @@ module.exports = function setupCheckins(app, errorHandler) {
     var dbName = url.pathname.replace(/\W/g, '').replace(/^checkin/, '');
 
     if (dbName) {
-      return './checkins/' + dbName + '.db';
+      return './data/checkins/' + dbName + '.db';
     }
 
-    return './checkins/default.db';
+    return './data/checkins/default.db';
   }
 
   // Save the checkins into the user's document in db, the send the result to res

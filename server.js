@@ -9,10 +9,25 @@
 */
 
 var express = require('express'),
+  fs = require('fs'),
   checkins = require('./checkins'),
   cleanGoogle = require('./cleanGoogle'),
   scores = require('./scores'),
   app = express();
+
+function mkdir(name) {
+  try {
+    fs.mkdirSync(name);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+mkdir('./data');
+mkdir('./data/scores');
+mkdir('./data/checkins');
+mkdir('./data/google-cache');
 
 // CORS middleware
 function allowCrossDomain(req, res, next) {
@@ -25,6 +40,7 @@ function allowCrossDomain(req, res, next) {
 
 // Set jsonp callback - mirrored in javascript calls
 app.set('jsonp callback name', 'callback');
+app.use(express.logger());
 app.use(allowCrossDomain);
 app.use(express.json());
 app.use(express.urlencoded());
