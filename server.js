@@ -1,11 +1,12 @@
 /*
   Decoded API
 
-  Running on api.decoded.co
-  Raspbian + node.js
+  Running on api.decoded.co (Raspberry Pi)
+  ArchLinux + node.js
 
-  Checkin for Code in a Day
+  Checkin for Code in a Day App
   Google filter for Data Viz in a Day
+  Scores for CodeED in a Day Quiz App
 */
 
 var express = require('express'),
@@ -14,6 +15,10 @@ var express = require('express'),
   cleanGoogle = require('./cleanGoogle'),
   scores = require('./scores'),
   app = express();
+
+//  create a directory
+//  don't check for directory first as may instigate a race condition
+//  just handle the error
 
 function mkdir(name) {
   try {
