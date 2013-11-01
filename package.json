@@ -1,6 +1,6 @@
 {
   "name": "api.decoded.co",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Decoded API for Code in a Day and Data Viz in a Day",
   "main": "server.js",
   "dependencies": {
