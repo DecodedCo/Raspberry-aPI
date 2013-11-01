@@ -52,7 +52,7 @@ app.use(express.urlencoded());
 function errorHandler(res, err) {
   'use strict';
 
-  console.log('Error:', err);
+  console.log('Error:', err, err.stack);
 
   res.send("<h1>Oops</h1><p>Sorry, there seems to be a problem!</p>\n\n<!--\n\n" + err.stack + "\n\n-->");
 }
@@ -68,4 +68,4 @@ app.all('*', function (req, res) {
 });
 
 // listen to 80 on the Pi, 3000 on backup server/dev
-app.listen(80);
+app.listen(3000);

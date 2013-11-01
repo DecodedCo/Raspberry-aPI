@@ -7,6 +7,7 @@ var url = require('url'),
   http://api.decoded.co/checkin/NAME returns all records
   http://api.decoded.co/checkin/NAME?username=twitterhandle stores checkin and returns number of checkins
 */
+
 module.exports = function setupCheckins(app, errorHandler) {
   'use strict';
 
@@ -35,7 +36,7 @@ module.exports = function setupCheckins(app, errorHandler) {
           checkIns: checkIns
         });
       } catch (e) {
-        errorHandler(res, err);
+        errorHandler(res, e);
       }
     });
   }
@@ -59,39 +60,48 @@ module.exports = function setupCheckins(app, errorHandler) {
   function checkinListener(req, res) {
     var reqUrl = url.parse(req.url, true),
       dbName = getDbName(reqUrl),
+      storeNewCallback = true,
       db;
 
     db = store.new(dbName, function () {
-      if (reqUrl.query.username) {
-        var username = reqUrl.query.username.replace(/\W/g, '').toLowerCase();
 
-        // Try to fetch the user's checkins. If there's an error, that user doesn't exist.
-        db.get(username, function (err, checkIns) {
-          if (err) {
-            // user doesn't exist, their first checkin
-            checkIns = 1;
-          } else {
-            // user exists, increase their checkins
-            checkIns++;
-          }
+      // bug in nstore which triggers callback twice
+      if (storeNewCallback) {
 
-          // check the user in
-          saveAndSendCheckin(username, checkIns, db, res);
+        storeNewCallback = false;
 
-          // log the request
-          console.log(
-            dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
-            username + ',' +
-            checkIns + ',' +
-            req.ip + ',' +
-            req.headers['user-agent']);
-        });
+        if (reqUrl.query.username) {
+          var username = reqUrl.query.username.replace(/\W/g, '').toLowerCase();
 
-      } else {
-        sendAll(db, res);
-      }
-    });
-  }
+          // Try to fetch the user's checkins. If there's an error, that user doesn't exist.
+          db.get(username, function (err, checkIns) {
+        
+            if (err) {
+              // user doesn't exist, their first checkin
+              checkIns = 1;
+            } else {
+              // user exists, increase their checkins
+              checkIns++;
+            } // end err
+
+            // check the user in
+            saveAndSendCheckin(username, checkIns, db, res);
+
+            // log the request
+            console.log(
+              dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
+              username + ',' +
+              checkIns + ',' +
+              req.ip + ',' +
+              req.headers['user-agent']);
+          }); // end db.get
+
+        } else {
+          sendAll(db, res);
+        } // end if username specified
+      } // end if storeCallback set
+    }); // end store.new
+  } // end checkin listener
 
   app.all('/checkin*', checkinListener);
 };
