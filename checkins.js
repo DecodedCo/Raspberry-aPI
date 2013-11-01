@@ -75,6 +75,14 @@ module.exports = function setupCheckins(app, errorHandler) {
             saveAndSendCheckin(username, checkIns + 1, db, res);
           }
         });
+
+        console.log(
+          dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
+          username + ',' +
+          data[username] + ',' +
+          req.ip + ',' +
+          req.headers['user-agent']);
+
       } else {
         sendAll(db, res);
       }

@@ -40,7 +40,6 @@ function allowCrossDomain(req, res, next) {
 
 // Set jsonp callback - mirrored in javascript calls
 app.set('jsonp callback name', 'callback');
-app.use(express.logger());
 app.use(allowCrossDomain);
 app.use(express.json());
 app.use(express.urlencoded());
