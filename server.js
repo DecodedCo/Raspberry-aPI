@@ -47,4 +47,5 @@ app.all('*', function (req, res) {
   res.redirect('http://decoded.co');
 });
 
-app.listen(8002);
+// listen to 80 on the Pi, 3000 on backup server/dev
+app.listen(3000);
