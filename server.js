@@ -68,4 +68,4 @@ app.all('*', function (req, res) {
 });
 
 // listen to 80 on the Pi, 3000 on backup server/dev
-app.listen(3000);
+app.listen(80);

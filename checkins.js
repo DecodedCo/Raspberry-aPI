@@ -68,20 +68,24 @@ module.exports = function setupCheckins(app, errorHandler) {
         // Try to fetch the user's checkins. If there's an error, that user doesn't exist.
         db.get(username, function (err, checkIns) {
           if (err) {
-            // user doesn't exist, create it
-            saveAndSendCheckin(username, 1, db, res);
+            // user doesn't exist, their first checkin
+            checkIns = 1;
           } else {
             // user exists, increase their checkins
-            saveAndSendCheckin(username, checkIns + 1, db, res);
+            checkIns++;
           }
-        });
 
-        console.log(
-          dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
-          username + ',' +
-          data[username] + ',' +
-          req.ip + ',' +
-          req.headers['user-agent']);
+          // check the user in
+          saveAndSendCheckin(username, checkIns, db, res);
+
+          // log the request
+          console.log(
+            dbName.replace(/.db$/g, '').replace(/^\.\/data\//g, '') + ',' +
+            username + ',' +
+            checkIns + ',' +
+            req.ip + ',' +
+            req.headers['user-agent']);
+        });
 
       } else {
         sendAll(db, res);
