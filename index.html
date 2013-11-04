@@ -1,22 +1,51 @@
 <!DOCTYPE html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		
 		<title>Decoded API Documentation</title>
-		<link rel="stylesheet" href="http://decoded.co/css/din-family.css" type="text/css"/>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
-	    <link rel="stylesheet" href="/css/typography.css" type="text/css"/>
-	   <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
-       <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 
+		<link rel="stylesheet" href="http://decoded.co/css/din-family.css" type="text/css">
+		<link rel="stylesheet" href="css/style.css" type="text/css" >
+		<link rel="stylesheet" href="css/typography.css" type="text/css">
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+		
 	</head>
 
 	<body>
 	  <div id="container">
 		<h1>Decoded API Documentation</h1>
-		  <section class="api">
-			<h3>What is Decodeds API?</h3>
-			<p>To help you build your Code in a Day app, Decoded has created an API that allows you to store data on a <b>server</b>. <b class="api_link">api.decoded.co </b>is actually hosted on a <b>Raspberry Pi</b>, a credit card-sized computer (a computer is a server) that you can buy for $25.</p>
-			<img src="raspberry_pie.jpg"/>
+		<hr>
+		<section class="api">
+		<h2>The Brief</h2>
+		<p>Our brief requires us to store some data about checkins. We can't just store this in our user's browser for two reasons: </p>
+		<ol>
+			<li>Data stored in the browser is temporary; if the user closes their browser or deletes their cookies, the data is lost.</li>
+			<li>We want a common data store; a central repository of all user checkins. We will then be able to access all of this data if we want to keep track of checkins.</li>
+		</ol>
+		<p>So, we need to store our data on a single computer that we can control &mdash; a web server.</p>
+		<hr>
+		<h2>Our server</h2>
+		<p>
+			A server might be provided by someone like Amazon Web Services, but we chose a Raspberry Pi &mdash; a credit card-sized computer that you can buy for $25. It's sitting in the corner of our London HQ!</p>
+		</p>
+			<img src="img/raspberry_pi.jpg"/>
+		<p>
+			We chose a Raspberry Pi to demonstrate that there's nothing magical about a web-server. In the real world, you want to use something a bit more sturdy. If someone spills tea on the Pi, or unplugs it, or our internet connection breaks – the server will stop working!
+		</p>
+		<p>
+			Don't worry, we have a back-up at: <a href="http://form.decoded.co:3000/checkin">form.decoded.co:3000/checkin</a>
+		</p>
+		<hr>
+		<h2></h2>
+
+		There are lots! In fact, you could use any programming language on the server. You are in charge of the environment, so it's up to you to make it work. This is in contrast with front-end technologies: browsers are designed to be universal tools, so there are standards about what languages are able to be processed by the browser (we typically only use three languages in the browser: HTML, CSS and JavaScript). 
+
+		We chose Node.js, because it allows us to create a server very easily. Plus it uses JavaScript, the final language you will be using today. So if you do want to look into our server-side code later, you can!
+
+
+			
 			<p>With a few lines of code, your app can send data to this server to be stored. It can also pull data down from the server to be displayed in your app.</p>
 		  </section>
 		  <section class="data_stored">
@@ -27,13 +56,13 @@
 			<h3>How is the data stored in the API?</h3>
 			<p>The data is stored in a <b>JSON format</b>, take a look at the example below.</p>
 				<p><pre><code>{
-    decodedco: 1, 
-    johnridpath: 2,
-    kathrynparsons: 3,
-    aliblackwell: 4
+	decodedco: 1, 
+	johnridpath: 2,
+	kathrynparsons: 3,
+	aliblackwell: 4
 }</code></pre></p>
-          </section>
-          <section class="how_stored">
+		  </section>
+		  <section class="how_stored">
 			<h3>Where is the data stored in the API?</h3>
 			<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL: <b class="api_link">http://api.decoded.co/checkin/01-04-13.</b><br><br>
 
@@ -42,36 +71,36 @@
 			To make a checkin, you can append a query to this URL using the "username" parameter. For example:
 
 			<b class="api_link">http://api.decoded.co/checkin/01-04-13?username=kathrynparsons.</b></p>
-          </section>
+		  </section>
 		  <section class="whatstored">
 			<h3>Submitting data from your app</h3>
 			<p>You have a few options as to how you might submit data to a datastore in this api.</p>
 			<h5>1) Form</h5>
 			<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
-                
-                <pre><code>&lt;form action="http://api.decoded.co/checkin/04-07-13"&gt;
-    &lt;input type="text" name="username"&gt;
+				
+				<pre><code>&lt;form action="http://api.decoded.co/checkin/04-07-13"&gt;
+	&lt;input type="text" name="username"&gt;
 &lt;/form&gt;</pre></code>
 
-	        <h5>2) AJAX</h5>
-	        <p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
-                
-            <pre><code>$.ajax({
-    url: 'http://api.decoded.co/checkin/04-07-13',
-    data: {username: "DecodedCo"},
-    method: 'POST',
-    dataType: 'jsonp',
-    jsonp: 'callback',
-    jsonpCallback: 'jsonpCallback',
-    success: function(data){
-        console.log(data);
-    }
+			<h5>2) AJAX</h5>
+			<p>You can also submit data via AJAX. AJAX can send data to and retrieve data from the server without leaving the current page. We recommend using jQuery's AJAX function, as follows:</p>
+				
+			<pre><code>$.ajax({
+	url: 'http://api.decoded.co/checkin/04-07-13',
+	data: {username: "DecodedCo"},
+	method: 'POST',
+	dataType: 'jsonp',
+	jsonp: 'callback',
+	jsonpCallback: 'jsonpCallback',
+	success: function(data){
+		console.log(data);
+	}
 });</pre></code>
 		  </section>
 		  <footer>
-			    <p>For more information, please read the jQuery .ajax() documentation (<b class="api_link")>http://api.jquery.com/jQuery.ajax/</b>).</p>
+				<p>For more information, please read the jQuery .ajax() documentation (<b class="api_link")>http://api.jquery.com/jQuery.ajax/</b>).</p>
 
-			    <p>If you have any questions about this API, please contact info@decoded.co.</p>
+				<p>If you have any questions about this API, please contact info@decoded.co.</p>
 		  </footer>
 		</div>
 	</body>
