@@ -3,7 +3,6 @@
 		
 		<title>Decoded API Documentation</title>
 		
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/prism.js"></script>
 
 		<link rel="icon" href="http://decoded.co/favicon.png" type="image/png" />
@@ -20,11 +19,10 @@
 
 	<body>
 	  <div id="container">
-			<h2>Decoded API Docs</h2>
-			<h3>api.decoded.co</h3>
+			<h1>Decoded API Docs</h1>
 			<hr>
-			<h2>The Brief</h2>
-
+			<h2>Our brief</h2>
+			<h3>Store check-in data</h3>
 			<p>
 				Our brief requires us to store some data about checkins. We can't just store this in our user's browser because data stored in the browser is temporary. If the user were to close their browser, delete their cookies or access your app from a different device, there would be no record that they had previously checked in.
 			</p>
@@ -35,6 +33,7 @@
 			<hr>
 
 			<h2>Our server</h2>
+			<h3>A $25 computer</h3>
 			<p>
 				A server might be provided by someone like Amazon Web Services, but we chose a Raspberry Pi &mdash; a credit card-sized computer that you can buy for $25. It's sitting in the corner of our London HQ!
 			</p>
@@ -48,7 +47,8 @@
 			
 			<hr>
 
-			<h2>What data do we need to store?</h2>
+			<h2>Our data</h2>
+			<h3>Name and number</h3>
 			<p>Your app will ask users to input their username to check-in. It will then display their username and the number of times they have checked in. We need to store:</p>
 			<ol>
 				<li>Name of user</li>
@@ -64,17 +64,19 @@
 			
 			<hr>
 
-			<h2>How do we store and access data?</h2>		
+			<h2>Our instructions</h2>
+			<h3>Store and access</h3>	
 			<p>We have created this API to make it really easy to store and access data on our server.</p>
 			<p>Each workshop will have a unique name assigned to it, usually the date of the session (e.g. 01-04-13). That data will be accessible at the following URL:</p> 
-			<p class="url"><a href="http://api.decoded.co/checkin/01-04-13">http://api.decoded.co/checkin/01-04-13</a></p>
-			<p>The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's apps.</p>
+			<pre><code class="language-markup">http://api.decoded.co/checkin/01-04-13</code></pre>
+			<p>The first time someone checks into one of the apps created during your session a new datastore will automatically be created - this initial datastore will then be used to store the data for everyone's app.</p>
 			<p>To make a checkin, you can append a query to this URL using the "username" parameter. For example:</p>
-			<p class="url"><a href="http://api.decoded.co/checkin/01-04-13?username=adalovelace">http://api.decoded.co/checkin/01-04-13?username=adalovelace</a></p>
+			<pre><code class="language-markup">http://api.decoded.co/checkin/01-04-13?username=adalovelace</code></pre>
 
 			<hr>
 
 			<h2>Example usage</h2>
+			<h3>Forms and AJAX</h3>
 			<h4>1) Form</h4>
 			<p>The simplest way is to use an HTML form with a single input. To choose where to send the data, you will need to set the form's "action" attribute to your session's API URL. Your form should include a single text input box with the "name" attribute set to "username". For example:</p>
 			<pre><code class="language-markup">&lt;form action="http://api.decoded.co/checkin/04-07-13"&gt;
