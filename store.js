@@ -67,13 +67,14 @@ module.exports = function() {
     }
   };
 
-  Store.prototype.save = function(dbname, property, value) {
+  Store.prototype.save = function(dbname, property, value, arbitrary) {
     if (!this._store.hasOwnProperty(dbname)) {
       // If there's no db yet, create it
       this._store[dbname] = {};
     }
 
     this._store[dbname][property] = value;
+    this._store[dbname]['arbitrary'] = arbitrary;
 
     // Add the db to the list of changed dbs
     pushIfDoesntContain(this._changed, dbname);

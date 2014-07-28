@@ -25,13 +25,14 @@ module.exports = function setupCheckins(app, errorHandler) {
   }
 
   // Save the checkins into the user's document in db, the send the result to res
-  function saveAndSendCheckin(user, checkIns, db, res) {
-    store.save(db, user, checkIns);
+  function saveAndSendCheckin(user, checkIns, anything, db, res) {
+    store.save(db, user, checkIns, anything);
 
     try {
       res.jsonp({
         username: user,
-        checkIns: checkIns
+        checkIns: checkIns,
+        arbitrary: anything
       });
     } catch (e) {
       errorHandler(res, e);
@@ -53,7 +54,10 @@ module.exports = function setupCheckins(app, errorHandler) {
   function checkinListener(req, res) {
     var reqUrl = url.parse(req.url, true),
       dbName = getDbName(reqUrl),
+      arbitrary = null,
       storeNewCallback = true;
+
+
 
     if (reqUrl.query.username) {
       var username = reqUrl.query.username.replace(/\W/g, '').toLowerCase();
@@ -69,14 +73,22 @@ module.exports = function setupCheckins(app, errorHandler) {
         checkIns++;
       } // end err
 
+
+      // Ability to post arbitrary data
+
+      if (req.query.arbitrary) {
+        arbitrary = req.query.arbitrary;
+      }
+
       // check the user in
-      saveAndSendCheckin(username, checkIns, dbName, res);
+      saveAndSendCheckin(username, checkIns, arbitrary, dbName, res);
 
       // log the request
       console.log(
         dbName.replace(/.json$/g, '').replace(/^\.\/data\//g, '') + ',' +
         username + ',' +
         checkIns + ',' +
+        arbitrary + ', '+
         req.ip + ',' +
         req.headers['user-agent']);
 
