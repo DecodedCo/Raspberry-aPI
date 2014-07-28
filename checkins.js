@@ -75,7 +75,6 @@ module.exports = function setupCheckins(app, errorHandler) {
 
 
       // Ability to post arbitrary data
-
       if (req.query.arbitrary) {
         arbitrary = req.query.arbitrary;
       }
