@@ -40,35 +40,48 @@ module.exports = function setupCheckins(app, errorHandler) {
     var reqUrl = url.parse(req.url, true),
       dbName = getDbName(reqUrl),
       storeNewCallback = true,
-      key, rawVal, val;
+      key, rawVal, val, id, data;
 
-    if (Object.keys(req.query).length > 0) {
-      for (key in req.query) {
-        rawVal = req.query[key];
+    if (req.query.id) {
+      id = req.query.id;
+      delete req.query.id;
+      data = store.get(dbName, id) || {id: id};
 
-        if (rawVal === '') {
-          val = undefined;
-        } else if (rawVal === 'true') {
-          val = true;
-        } else if (rawVal === 'false') {
-          val = false;
-        } else if (rawVal.match(/^[0-9\.\-e]+$/)) {
-          val = parseFloat(rawVal);
-          if (Number.isNaN(val)) {
-            val = rawVal;
-          }
-        } else {
-          val = rawVal;
+      if (Object.keys(req.query).length > 0) {
+        for (key in req.query) {
+          data[key] = parseValue(req.query[key]);
         }
 
-        store.save(dbName, key, val);
+        data.updated = Date.now();
       }
 
-      store.save(dbName, 'updated', Date.now());
+      store.save(dbName, id, data);
+      res.jsonp(data);
+    } else {
+      res.jsonp(store.get(dbName));
     }
-
-    return res.jsonp(store.get(dbName));
   }
 
   app.all('/store*', storeListener);
 };
+
+function parseValue(rawVal) {
+  var val;
+
+  if (rawVal === '') {
+    val = undefined;
+  } else if (rawVal === 'true') {
+    val = true;
+  } else if (rawVal === 'false') {
+    val = false;
+  } else if (rawVal.match(/^[0-9\.\-e]+$/)) {
+    val = parseFloat(rawVal);
+    if (Number.isNaN(val)) {
+      val = rawVal;
+    }
+  } else {
+    val = rawVal;
+  }
+
+  return val;
+}
