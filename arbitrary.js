@@ -63,6 +63,8 @@ module.exports = function setupCheckins(app, errorHandler) {
 
         store.save(dbName, key, val);
       }
+
+      store.save(dbName, 'updated', Date.now());
     }
 
     return res.jsonp(store.get(dbName));
