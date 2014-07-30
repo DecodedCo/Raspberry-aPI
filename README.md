@@ -1,8 +1,7 @@
 Raspberry aPI
 ===============
 
-
-!(http://assets.decoded.co/images/raspberry-api.jpg "Raspberry aPI")
+![Raspberry aPI](http://assets.decoded.co/images/raspberry-api.jpg)
 
 This repo runs our Raspberry Pi from our London HQ.
 
