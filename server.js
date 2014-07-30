@@ -14,7 +14,9 @@ var express = require('express'),
   checkins = require('./checkins'),
   cleanGoogle = require('./cleanGoogle'),
   scores = require('./scores'),
+  path = require('path'),
   app = express();
+  app.use(express.static(path.join(__dirname, 'public')));
 
 //  create a directory
 //  don't check for directory first as may instigate a race condition
@@ -64,7 +66,8 @@ scores(app, errorHandler);
 // Default behavior
 app.all('*', function (req, res) {
   'use strict';
-  res.redirect('http://decoded.co');
+  //res.redirect('http://decoded.co');
+  res.render('index.html');
 });
 
 // listen to 80 on the Pi, 3000 on backup server/dev

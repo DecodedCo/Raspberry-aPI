@@ -1,0 +1,7 @@
+{
+  "name": "apidecodedco",
+  "version": "1.0.0",
+  "dependencies": {
+    "pollen": "git@github.com:DecodedCo/pollen.git#v0.0.47"
+  }
+}
