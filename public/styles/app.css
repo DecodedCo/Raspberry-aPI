@@ -18,3 +18,15 @@ pre {
 h4 {
 	margin-top: 1.5em;
 }
+
+header.navbar {
+	min-height: 34px; /*bring in line with Pres*/
+}
+
+#logo {
+	width: 200px;
+	position: absolute;
+	position: fixed;
+	bottom: 1em;
+	right: 1em;
+}
