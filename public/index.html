@@ -1,1 +1,156 @@
-hello universe!
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Favicon and iOS/Android shortcut icons -->
+  <link rel="shortcut icon" sizes="128x128" href="bower_components/pollen/assets/shortcut-icon-128.png">
+  <link rel="shortcut icon" sizes="196x196" href="bower_components/pollen/assets/shortcut-icon-196.png">
+  <link rel="apple-touch-icon" href="bower_components/pollen/assets/apple-touch-icons/iPhone.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="bower_components/pollen/assets/apple-touch-icons/iPad.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="bower_components/pollen/assets/apple-touch-icons/iPhone@2x.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="bower_components/pollen/assets/apple-touch-icons/iPad@2x.png">
+  <link rel="icon" href="bower_components/pollen/assets/favicon.png" type="image/png">
+
+  <title>Your App</title>
+
+  <!-- get the pretty icons -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+  <!-- bundle below styles in one stylesheet when compiling -->
+  <!-- build:css({app,.tmp}) styles/main.css -->
+
+  <!-- load the fonts  -->
+  <link href="bower_components/pollen/css/din-family.css" rel="stylesheet" type="text/css">
+  <!-- load pollen -->
+  <link href="bower_components/pollen/css/base.css" rel="stylesheet" type="text/css">
+  <link href="bower_components/pollen/css/utils.css" rel="stylesheet" type="text/css">
+  <!-- load iyour custom styles -->
+  <link href="styles/app.css" rel="stylesheet" type="text/css">
+
+  <!-- endbuild -->
+</head>
+
+<body>
+  <header class="navbar navbar-default navbar-fixed-top global-nav" role="navigation" id="nav">
+    <a href="https://decoded.co/" class="logo"><img src="bower_components/pollen/assets/decoded-logo-navbar.png" alt="Decoded"></a>
+    <button class='navbar-toggle' data-target="#navbar-collapse" data-toggle="collapse" ><i class="fa fa-bars"></i></button>
+    <div id="navbar-collapse" class="navbar-collapse collapse">
+      <div class="navbar-left hidden-print">
+        <ul class="nav navbar-nav">
+          <!-- Links - add a class navbar-tab to the li element -->
+          <li class="navbar-tab"><a href="#" id="clear-storage">Link</a></li>
+          <!-- Dropdown Menus - make sure not to over-use them, give a navbar-tab as well -->
+          <li class="dropdown navbar-tab">
+            <a data-toggle="dropdown"><i class="fa fa-clock-o"></i> Dropdown &nbsp;<i class="fa fa-caret-down"></i></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li><a href="/#/morning"><i class="fa fa-sun-o"></i> Sub-Item</a></li>
+              <li><a href="/#/evening"><i class="fa fa-moon-o"></i> Evening</a></li>
+            </ul>
+          </li>
+          <!-- Inline Forms, if you need more than one field it should probably not be in the header -->
+          <li>
+            <form action='#' onsubmit="return false;" class="form-inline">
+              <div class="form-group">
+                <input type="text" placeholder="Inline Form" class="form-control">
+                <button type='button' onclick='function(){return false;};'>Button</button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-right hidden-print">
+        <span class="navbar-brand">App Name</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container main-container">
+    <div class="col-md-12">
+      <h1>New App</h1>
+      <p class='lead'>Make something amazing, you&apos;re a hero.</p>
+      <p>Hella deep v Banksy scenester Shoreditch ethical. Banjo readymade Williamsburg paleo plaid, cardigan actually sustainable trust fund literally meggings tousled. Letterpress sartorial paleo, direct trade single-origin coffee scenester occupy Pitchfork master cleanse. Blue Bottle retro locavore, High Life bespoke keytar leggings pour-over Carles cardigan. Flexitarian normcore vegan, cliche Intelligentsia Odd Future fap flannel next level fanny pack shabby chic Wes Anderson. Fanny pack chambray selvage, lomo American Apparel mustache gentrify Bushwick semiotics. Pop-up mixtape tote bag keytar.</p>
+      <p>Mustache lomo Schlitz YOLO, banh mi cardigan kogi salvia pug. Brooklyn you probably haven't heard of them pork belly +1 Godard literally, umami next level flexitarian viral tousled stumptown fixie Vice vegan. Banksy hella jean shorts raw denim, mlkshk narwhal single-origin coffee scenester roof party ethical leggings messenger bag banh mi. Flexitarian actually swag, seitan dreamcatcher church-key mustache Tonx freegan banh mi normcore Odd Future forage fashion axe. Retro locavore vegan Marfa stumptown flannel narwhal. Brooklyn Austin street art American Apparel Schlitz, tofu slow-carb disrupt put a bird on it deep v selvage mumblecore PBR. Bitters locavore synth fanny pack, Neutra pug salvia mlkshk whatever drinking vinegar.</p>
+    </div>
+  </div>
+
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <!-- build:js scripts/plugins.js -->
+  <!-- bootstrap scripts -->
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/affix.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/alert.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/button.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/carousel.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/transition.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/collapse.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/modal.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/scrollspy.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/tab.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/tooltip.js"></script>
+  <script src="bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/popover.js"></script>
+
+  <!-- pollen scripts -->
+  <script src="bower_components/pollen/js/navigation.js"></script>
+  <script src="bower_components/pollen/js/colors.js"></script>
+
+  <!-- add your bespoke scripts here -->
+  <script src="scripts/dist/app.js"></script>
+  <!-- endbuild -->
+
+  <!-- live reload- remove for production -->
+  <script src="//localhost:35729/livereload.js"></script>
+</body>
+
+
+API Documentation
+What it does
+
+The Decoded Checkin API makes it possible to store a list of usernames and the number of times each one has been checked in.
+
+How to use it
+
+CREATE A NEW DATA STORE
+
+The API is exposed via a URL:
+
+http://api.decoded.co/checkin/
+
+To create a new data store, add a unique string of text to the URL:
+
+http://api.decoded.co/checkin/new-store/
+
+STORING A CHECKIN
+
+To create a new checkin, make an HTTP request to the same URL, but append a "username" parameter:
+
+http://api.decoded.co/checkin/new-store/?username=stephenfry
+
+If the "username" does not currently exist in the "new-store", then it is added with the number of checkins set to one (1).
+
+Each subsequent HTTP request will increment the number of checkins for that user by one.
+
+The URL will then return a JavaScript object of the result:
+
+{ user: "stephenfry", checkins: 1 }
+
+CREATING A CHECKIN INPUT
+
+Create an HTML form with a text input.
+
+Give the text input the name "username".
+
+Define the form action as the new data store URL.
+
+How it works
+
+The API has been implemented using JavaScript/Node.js to run a server on the Raspberry PI. Each data store file consists of a list of usernames and corresponding number of checkins, stored in "JSON" (JavaScript Object Notation) format eg
+
+{ "stephenfry": 1, "jimmyfallon": 16, "MarthaStewart‎": 7 }
+
+The contents of this file are updated in response to the HTTP requests described above.
