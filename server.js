@@ -63,8 +63,6 @@ function errorHandler(res, err) {
 }
 
 checkins(app, errorHandler);
-cleanGoogle(app, errorHandler);
-scores(app, errorHandler);
 arbitrary(app, errorHandler);
 
 
