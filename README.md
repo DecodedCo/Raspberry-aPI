@@ -2,9 +2,15 @@ Raspberry aPI
 ===============
 
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Decoded's Raspberry aPI](http://assets.decoded.co/images/raspberry-api.jpg "Raspberry aPI")
+
+This repo runs our Raspberry Pi from our London HQ.
+
+It uses Node.js as the server framework, and is written in JavaScript. 
+
+Run the server by cloning this repo onto your own server, installing node and node package manager (npm), and then run `node server.js`
+
+Server.js is the main file, referencing checkins.js and server.js
 
 
-node.js running on Raspberry Pi on 195.99.163.139 (London)
-
-  git update-index --assume-unchanged checkin/default.json
+git update-index --assume-unchanged checkin/default.json
