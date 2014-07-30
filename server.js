@@ -14,6 +14,7 @@ var express = require('express'),
   checkins = require('./checkins'),
   cleanGoogle = require('./cleanGoogle'),
   scores = require('./scores'),
+  arbitrary = require('./arbitrary'),
   app = express();
 
 //  create a directory
@@ -33,6 +34,7 @@ mkdir('./data');
 mkdir('./data/scores');
 mkdir('./data/checkins');
 mkdir('./data/google-cache');
+mkdir('./data/store');
 
 // CORS middleware
 function allowCrossDomain(req, res, next) {
@@ -60,6 +62,7 @@ function errorHandler(res, err) {
 checkins(app, errorHandler);
 cleanGoogle(app, errorHandler);
 scores(app, errorHandler);
+arbitrary(app, errorHandler);
 
 // Default behavior
 app.all('*', function (req, res) {
