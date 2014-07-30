@@ -50,7 +50,7 @@
       </div>
       <div id="rasp" class="col-md-5 col-md-offset-1">
         <figure>  
-          <img src="//assets.decoded.co/images/raspberry-api.jpg">
+          <img class="img-responsive" src="//assets.decoded.co/images/raspberry-api.jpg">
         </figure>
       </div>
       <div class="col-md-6" id="checkin">
@@ -58,19 +58,19 @@
         <h2>What it does</h2>
         <p class="first-para">The Decoded Checkin API makes it possible to store a list of usernames and the number of times each one has been checked in.</p>
         <h2>How to use it</h2>
-        <h3>CREATE A NEW DATA STORE</h3>
+        <h4>CREATE A NEW DATA STORE</h4>
         <p>The API is exposed via a URL:</p>
         <pre><code>http://api.decoded.co/checkin/</code></pre>
         <p>To create a new data store, add a unique string of text to the URL:</p>
         <pre><code>http://api.decoded.co/checkin/your-app-name/</code></pre>
-        <h3>STORING A CHECKIN</h3>
+        <h4>STORING A CHECKIN</h4>
         <p>To create a new checkin, make an HTTP request to the same URL, but append a "username" parameter:</p>
         <pre><code>http://api.decoded.co/checkin/your-app-name/?username=stephenfry</code></pre>
         <p>If the "username" does not currently exist in the your-app-name database, then it is added with the number of checkins set to one.</p>
         <p>Each subsequent HTTP request will increment the number of checkins for that user by one.</p>
         <p>The URL will then return a JavaScript object of the result:</p>
         <pre><code>{ user: "stephenfry", checkins: 1 }</code></pre>
-        <h3>CREATING A CHECKIN INPUT</h3>
+        <h4>CREATING A CHECKIN INPUT</h4>
         <p>Create an HTML form with a text input.</p>
         <p>Give the text input the name "username".</p>
         <p>Define the form action as the new data store URL.</p>
@@ -80,18 +80,18 @@
         <p>The contents of this file are updated in response to the HTTP requests described above.</p>
       </div>
     </div>
-    <div class="container" style="margin-top: 3em;">
+    <div class="container">
       <div class="col-md-6" id="store">
         <h1>Store Endpoint</h1>
         <h2>What it does</h2>
         <p class="first-para">The Decoded Store API makes it possible to store arbitrary data in JSON format.</p>
         <h2>How to use it</h2>
-        <h3>CREATE A NEW DATA STORE</h3>
+        <h4>CREATE A NEW DATA STORE</h4>
         <p>The API is exposed via a URL:</p>
         <pre><code>http://api.decoded.co/store/</code></pre>
         <p>To create a new data store, add a unique string of text to the URL:</p>
         <pre><code>http://api.decoded.co/store/your-app-name/</code></pre>
-        <h3>STORING DATA</h3>
+        <h4>STORING DATA</h4>
         <p>To save some data, make an HTTP POST request to the URL, with data sent as URL parameters. You must specify an "id" with a unique value first, as this will be used to identify your data.</p>
         <pre><code>http://api.decoded.co/store/your-app-name/?id=myproject&name=bob&age=30</code></pre>
         <p>The URL will then return a JavaScript object of the result, as well as a timestamp:</p>
