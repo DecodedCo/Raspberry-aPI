@@ -18,7 +18,7 @@ If you are interested in running this on your own Raspberry Pi, [see here for se
 
 1. First, clone this repository onto your server.
 2. If you don't already have [Node]() installed, do that now.
-..* Also, you may need to install Node Package Manager (npm).
+ ..* Also, you may need to install Node Package Manager (npm).
 
 Run the server by cloning this repo onto your own server, installing node and node package manager (npm). Then run `npm install`, `cd public; bower install` and then run `node server.js`
 
