@@ -23,18 +23,18 @@ _Note: The following guide assumes that a Linux/Unix-like System is used_
 3. Run `npm install`, whilst in the project directory.
 4. Then run `cd public; bower install`.
 5. Finally, to run the server change back to the main project directory  and run the server with node:
-  ```
+  ```shell
   cd ..
   node server.js
   ```
   * __NOTE:__ The server might fail to run if you don't have root/sudo/admin privileges and try to run the server on a _well-known port_ (any port from 0 to 1023). By default, this server is configured to run on well-known port 80, the HTTP port. If you want to change this so that you don't need speical permissions, you'll need to change this to any port number over 1023. The way to do this is as follows:
     At the end of the `server.js` file, you should see the following:
 
-    ```
+    ```javascript
     // listen to 80 on the Pi
     app.listen(80);
     ```
 
     Change the number 80 to a port number of your choice.
 
-server.js is the main file; it calls checkins.js and arbitrary.js to create the /checkins and /store endpoints.
+`server.js` is the main file; it calls `checkins.js` and `arbitrary.js` to create the `/checkins` and `/store` endpoints.
