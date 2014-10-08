@@ -12,7 +12,9 @@ This repository contains the code for the [Decoded API](http://api.decoded.co), 
 
 It uses the open source platform [Node.js](https://github.com/joyent/node) and [Express framework](https://github.com/strongloop/express), and is written in JavaScript.
 
-If you are interested in running this on your own Raspberry Pi, [see here for setup details](#setting-up) and let us know how you get on! This [Documentation](#documentation) is still a work in progress.
+If you are interested in running this on your own Raspberry Pi, [see here for setup details](#setting-up) and let us know how you get on!
+
+__This [Documentation](#documentation) is still a work in progress.__
 
 ###Setting up<a name="setting-up"></a>
 _Note: The following guide assumes that a Linux/Unix-like System is used_
