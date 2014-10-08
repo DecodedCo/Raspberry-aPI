@@ -17,8 +17,8 @@ If you are interested in running this on your own Raspberry Pi, [see here for se
 ###Setting up<a name="setting-up"></a>
 
 1. Clone this repository onto your server.
-2. If you don't already have [Node]() installed, do that now.
-  * Also, you may need to install Node Package Manager `(npm)`, if that is not already installed.
+2. If you don't already have [Node](http://nodejs.org/) installed, do that now.
+  * Also, you may need to install [Node Package Manager](https://www.npmjs.org/) `(npm)`, if that is not already installed.
 3. Run `npm install`, whilst in the project directory.
 4. Then run `cd public; bower install`.
 5. Finally, to run the server change back to the main project directory `cd ..` and run `node server.js`.
@@ -29,7 +29,7 @@ If you are interested in running this on your own Raspberry Pi, [see here for se
     // listen to 80 on the Pi
     app.listen(80);
     ```
-    
+
     Change the number 80 to a port number of your choice.
 
 server.js is the main file; it calls checkins.js and arbitrary.js to create the /checkins and /store endpoints.
