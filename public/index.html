@@ -16,12 +16,9 @@
     <!-- bundle below styles in one stylesheet when compiling -->
     <!-- build:css({app,.tmp}) styles/main.css -->
 
-    <!-- load the fonts  -->
-    <link href="bower_components/pollen/css/din-family.css" rel="stylesheet" type="text/css">
-    <!-- load pollen -->
-    <link href="bower_components/pollen/css/base.css" rel="stylesheet" type="text/css">
-    <link href="bower_components/pollen/css/utils.css" rel="stylesheet" type="text/css">
-    <!-- load iyour custom styles -->
+
+    <!-- load your custom styles -->
+    <link rel="stylesheet" type="text/css" href="bower_components/semantic-ui/dist/semantic.css">
     <link href="styles/app.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css">
     <script src="bower_components/highlightjs/highlight.pack.js"></script>
@@ -29,71 +26,84 @@
     <!-- endbuild -->
   </head>
   <body>
-    <header class="navbar navbar-default navbar-fixed-top global-nav" role="navigation" id="nav">
-    </header>
 
-    <div class="container main-container">
-      <div class="col-md-6">
-        <h1>Raspberry aPI Documentation</h1>
-        <p>The Decoded API currently provides two endpoints:</p>
-        <h4><a href="#checkin">/checkin</a></h4>
-        <p>The Checkin API stores a username and counts the number of times a user "checks in".</p>
-        <h4><a href="#store">/store</a></h4>
-        <p>The Store API accepts arbitrary data, stores it as JSON, and returns it with a timestamp</p>
-      </div>
-      <div id="rasp" class="col-md-5 col-md-offset-1">
-        <figure>
-          <img class="img-responsive" src="//assets.decoded.co/images/raspberry-api.jpg">
-        </figure>
-      </div>
-      <div class="col-md-6" id="checkin">
-        <h1>Checkin Endpoint</h1>
-        <h2>What it does</h2>
-        <p class="first-para">The Decoded Checkin API makes it possible to store a list of usernames and the number of times each one has been checked in.</p>
-        <h2>How to use it</h2>
-        <h4>CREATE A NEW DATA STORE</h4>
-        <p>The API is found at this URL:</p>
-        <pre><code>http://api.decoded.co/checkin/</code></pre>
-        <p>To create a new data store, add a unique piece of text at the end of the URL:</p>
-        <pre><code>http://api.decoded.co/checkin/your-app-name/</code></pre>
-        <h4>STORING A CHECKIN</h4>
-        <p>To store a new checkin, request this URL in the browser, but add a "username" value at the end:</p>
-        <pre><code>http://api.decoded.co/checkin/your-app-name/?username=stephenfry</code></pre>
-        <p>If the "username" does not currently exist in your new database, then it is added with the number of checkins set to 1.</p>
-        <p>Each time this URL is requested the backend database will increment the number of checkins for that user by 1.</p>
-        <p>The Raspberry Pi server will send back the checkin information for that user as a JavaScript object:</p>
-        <pre><code>{ user: "stephenfry", checkins: 1 }</code></pre>
-        <h4>CREATING A CHECKIN INPUT</h4>
-        <p>Create an HTML form with a text input. This is where your users can enter their checkin information.</p>
-        <pre><code>&lt;form&gt;&lt;input type="text"&gt;&lt;/form&gt;</code></pre>
-        <p>Give the text input the name "username".</p>
-        <pre><code>&lt;form&gt;&lt;input type="text" name="username"&gt;&lt;/form&gt;</code></pre>
-        <p>Define the form action as the new data store URL. This tells the form where to send the users check-in information.</p>
-        <pre><code>&lt;form action="http://api.decoded.co/checkin/your-app-name/"&gt;</code></pre>
-        <h2>How it works</h2>
-        <p>The API has been implemented using JavaScript/Node.js to run a server on the Raspberry Pi. Each data store file consists of a list of usernames and corresponding number of checkins, stored in "JSON" (JavaScript Object Notation) format eg</p>
-        <pre><code>{ "stephenfry": 1, "jimmyfallon": 16, "MarthaStewart‎": 7 }</code></pre>
-        <p>The contents of this file are updated in response to the HTTP requests described above.</p>
-      </div>
-    </div>
     <div class="container">
-      <div class="col-md-6" id="store">
-        <h1>Store Endpoint</h1>
-        <h2>What it does</h2>
-        <p class="first-para">The Decoded Store API makes it possible to store arbitrary data in JSON format.</p>
-        <h2>How to use it</h2>
-        <h4>CREATE A NEW DATA STORE</h4>
-        <p>The API is exposed via a URL:</p>
-        <pre><code>http://api.decoded.co/store/</code></pre>
-        <p>To create a new data store, add a unique string of text to the URL:</p>
-        <pre><code>http://api.decoded.co/store/your-app-name/</code></pre>
-        <h4>STORING DATA</h4>
-        <p>To save some data, make an HTTP POST request to the URL, with data sent as URL parameters. You must specify an "id" with a unique value first, as this will be used to identify your data.</p>
-        <pre><code>http://api.decoded.co/store/your-app-name/?id=myproject&name=bob&age=30</code></pre>
-        <p>The URL will then return a JavaScript object of the result, as well as a timestamp:</p>
-        <pre><code>{ id: "myproject", name: "bob", age: 30, timestamp: 123456 }</code></pre>
+      <div class="ui one column grid">
+        <section class="intro">
+          <h1 class="rpi-logo"><img src="/images/Raspberry_Pi_Logo.svg" alt="Raspberry"><span class="a">a</span>pi <span class="docs">docs</span></h1>
+          <p class="welcome">Welcome to Decoded's Raspberry Pi! This page is being served from our Pi at Decoded HQ in London.</p>
+          <p>You can use our API to keep track of checkins to an app, or to store arbitrary data.</p>
+          <p>You can also <a href="http://github.com/decodedco/api.decoded.co" title="Decoded Raspberry API on GitHub">browse our source code on GitHub!</a></p>
+          <div class="ui huge buttons">
+            <a class="ui positive button" href="#checkin">Checkin</a>
+            <div class="or"></div>
+            <a class="ui positive button" href="#store">Store</a>
+          </div>
+        </section>
+<!--         <p>The Decoded API currently provides two endpoints:</p>
+        <dl>
+          <dt><a href="#checkin">/checkin</a></dt>
+          <dd>The Checkin API stores a username and counts the number of times a user "checks in".</dd>
+          <dt><a href="#store">/store</a></dt>
+          <dd>The Store API accepts arbitrary data, stores it as JSON, and returns it with a timestamp</dd>
+        </dl> -->
+        <section id="checkin">
+          <h1>Checkin Endpoint</h1>
+          <p class="first-para">The Decoded Checkin API makes it possible to store a list of usernames and the number of times each one has been checked in.</p>
+          <h2>How to use it</h2>
+          <p>The API is found at this URL:</p>
+          <p class="ui message">http://api.decoded.co/checkin/</p>
+          <p>To create a new data store, add a unique piece of text at the end of the URL:</p>
+          <p class="ui message">http://api.decoded.co/checkin/your-app-name/</p>
+          <h2>Storing a checkin</h2>
+          <p>To store a new checkin, request this URL in the browser, but add a "username" value at the end:</p>
+          <p class="ui message">http://api.decoded.co/checkin/your-app-name/?username=stephenfry</p>
+          <p>If the "username" does not currently exist in your new database, then it is added with the number of checkins set to 1.</p>
+          <p>Each time this URL is requested the backend database will increment the number of checkins for that user by 1.</p>
+          <p>The Raspberry Pi server will send back the checkin information for that user as a JavaScript object:</p>
+          <pre class="ui message"><code class="js">{ user: "stephenfry", checkins: 1 }</code></pre>
+
+          <h2>Creating a checkin input</h2>
+          <p>Create an HTML form with a text input. This is where your users can enter their checkin information.</p>
+<pre class="ui message">
+<code class="html">&lt;form&gt;
+  &lt;input type="text"&gt;
+&lt;/form&gt;</code></pre>
+          <p>Give the text input the name "username".</p>
+<pre class="ui message">
+<code class="html">&lt;form&gt;
+  &lt;input type="text" name="username"&gt;
+&lt;/form&gt;</code></pre>
+          <p>Define the form action as the new data store URL. This tells the form where to send the users check-in information.</p>
+<pre class="ui message">
+<code class="html">&lt;form action="http://api.decoded.co/checkin/your-app-name/"&gt;
+  &lt;input type="text" name="username"&gt;
+&lt;/form&gt;</code></pre>
+<!--           <h2>How it works</h2>
+          <p>The API has been implemented using JavaScript/Node.js to run a server on the Raspberry Pi. Each data store file consists of a list of usernames and corresponding number of checkins, stored in "JSON" (JavaScript Object Notation) format eg</p>
+          <pre><code>{ "stephenfry": 1, "jimmyfallon": 16, "MarthaStewart‎": 7 }</code></pre>
+          <p>The contents of this file are updated in response to the HTTP requests described above.</p> -->
+        </section>
+        <section id="store">
+          <h1>Store Endpoint</h1>
+          <p class="first-para">The Decoded Store API makes it possible to store arbitrary data in JSON format.</p>
+          <h2>How to use it</h2>
+          <p>The API is exposed via a URL:</p>
+          <p class="ui message">http://api.decoded.co/store/</p>
+
+          <h2>Create a new data store</h2>
+          <p>To create a new data store, add a unique string of text to the URL:</p>
+          <p class="ui message">http://api.decoded.co/store/your-app-name/</p>
+          <h2>Storing data</h2>
+          <p>To save some data, make an HTTP POST request to the URL, with data sent as URL parameters. You must specify an "id" with a unique value first, as this will be used to identify your data.</p>
+          <p class="ui message">http://api.decoded.co/store/your-app-name/?id=myid&name=bob&age=30</p>
+          <p>The URL will then return a JavaScript object of the result, as well as a timestamp:</p>
+          <pre class="ui message"><code class="js">{ id: "myid", name: "bob", age: 30, timestamp: 123456 }</code></pre>
+        </section>
+
       </div>
-    </div>
+    </div><!-- end container -->
+
     <footer>
       <img id="logo" src="//assets.decoded.co/images/decoded-round.png">
     </footer>
