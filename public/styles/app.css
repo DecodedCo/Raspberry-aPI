@@ -110,3 +110,20 @@ code, kbd, pre, samp {
   font-size: 1rem;
 }
 
+pre {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.ui.yellow.button {
+	background: rgb(254,248,0);
+	background: rgba(254,248,0,.5);
+	color: #333;
+}
+
+.ui.yellow.button:hover {
+	background: rgb(254,248,0);
+	color: #333;
+}
+
