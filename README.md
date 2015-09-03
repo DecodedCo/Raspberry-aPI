@@ -7,7 +7,14 @@ This repository contains the code for the Decoded API, running on a Raspberry Pi
 
 It uses the open source platform [Node.js](https://github.com/joyent/node) and [Express framework](https://github.com/strongloop/express), and is written in JavaScript.
 
-Run the server by cloning this repo onto your own server, installing node and node package manager (npm). Then run `npm install`, `cd public; bower install` and then run `node server.js`
+Run the server by cloning this repo onto your own server, installing node and node package manager (npm). Then run in order:
+
+```
+npm install;
+cd public && bower install;
+cd ../;
+node server.js
+```
 
 server.js is the main file; it calls checkins.js and arbitrary.js to create the /checkins and /store endpoints.
 
