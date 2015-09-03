@@ -71,6 +71,7 @@ module.exports = function setupCheckins(app, errorHandler) {
           // Turn each item in to a true/false/number/string
           data[key] = parseValue(req.query[key]);
         }
+        data.updated = Date.now();
         // Store the data
         store.save(dbName, id, data);
         res.jsonp(data);
