@@ -81,31 +81,36 @@ module.exports = function() {
     }
   };
 
+  //this will create a database if it doesnt exist
   Store.prototype.save = function(dbname, property, value) {
+    //if the store doesnt have a database called dbname
     if (!this._store.hasOwnProperty(dbname)) {
-      // If there's no db yet, create it
+      //create it
       this._store[dbname] = {};
     }
-
+    //set the db property to the value specified
     this._store[dbname][property] = value;
 
-    // Add the db to the list of changed dbs
+    //and save the database!
     pushIfDoesntContain(this._changed, dbname);
   };
 
   Store.prototype.get = function(dbname, property) {
     // Fetch stuff out of _store, with sensible defaults for when the requested stuff doesn't exist
     if (property === undefined) {
+      //if no property (i.e ID) then return the whole database
       if (this._store[dbname] === undefined) {
+        //if there is no database return empty json
         return {};
       } else {
         return this._store[dbname];
       }
     }
-
+    //if database exists, and property in the database exists return only that entry
     if (this._store[dbname] && this._store[dbname][property]) {
       return this._store[dbname][property];
     } else {
+      //do nothing
       return undefined;
     }
   };

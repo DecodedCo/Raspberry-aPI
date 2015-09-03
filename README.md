@@ -15,6 +15,7 @@ cd public && bower install;
 cd ../;
 node server.js
 ```
+
 server.js is the main file; it calls checkins.js and arbitrary.js to create the /checkins and /store endpoints.
 
 If you are interested in running this on your own Raspberry Pi, let us know how you get on! We will be writing full documentation shortly.

@@ -22,6 +22,7 @@ module.exports = function setupCheckins(app, errorHandler) {
 
   // Get the db name from the url path. Strip non-word characters and 'store/' from the start
   function getDbName(url) {
+    //get the path and make the db name the path.json
     var dbName = url.pathname.replace(/\W/g, '').replace(/^store/, '');
 
     if (dbName) {
