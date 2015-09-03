@@ -25,11 +25,10 @@
           <h1 class="rpi-logo"><img src="/images/Raspberry_Pi_Logo.svg" alt="Raspberry"><span class="a">a</span>pi <span class="docs">docs</span></h1>
           <p class="welcome">Welcome to Decoded's Raspberry Pi! This page is being served from our Pi at Decoded HQ in London.</p>
           <p>You can use our API to keep track of checkins to an app, or to store arbitrary data.</p>
-          <p>You can also <a href="http://github.com/decodedco/api.decoded.co" title="Decoded Raspberry API on GitHub">browse our source code on GitHub!</a></p>
           <div class="ui huge buttons">
             <a class="ui yellow button" href="#checkin">Checkin</a>
-            <div class="or"></div>
-            <a class="ui yellow button" href="#store">Store</a>
+            <a class="ui yellow button" href="#checkin">Store</a>
+            <a class="ui yellow button" href="https://github.com/DecodedCo/Raspberry-aPI" target="none">Run on your computer</a>
           </div>
         </section>
         <section id="checkin">
@@ -76,10 +75,32 @@
           <p>To create a new data store, add a unique string of text to the URL:</p>
           <p class="ui message">http://api.decoded.co/store/your-app-name/</p>
           <h2>Storing data</h2>
-          <p>To save some data, make an HTTP POST request to the URL, with data sent as URL parameters. You must specify an "id" with a unique value first, as this will be used to identify your data.</p>
-          <p class="ui message">http://api.decoded.co/store/your-app-name/?id=myid&name=bob&age=30</p>
+          <p>To save some data, make an HTTP GET request to the URL, with data sent as URL parameters. An id parameter will automatically be created that is set to the current time stamp.</p>
+          <p class="ui message">http://api.decoded.co/store/your-app-name/?name=bob&age=30</p>
           <p>The URL will then return a JavaScript object of the result, as well as a timestamp:</p>
-          <pre class="ui message"><code class="js">{ id: "myid", name: "bob", age: 30, timestamp: 123456 }</code></pre>
+          <pre class="ui message"><code class="js">[timestamp] : { name: "bob", age: 30 }</code></pre>
+          <h2>Viewing data</h2>
+          <p>To view all of your data, make an HTTP GET request to your store URL</p>
+          <p class="ui message">http://api.decoded.co/store/your-app-name</p>
+          <p>The URL will then return all of the json data</p>
+          <pre class="ui message"><code class="js">[timestamp] : { name: "bob", age: 30 }</code></pre>
+          <h2>Creating a store input field</h2>
+          <p>Create an HTML form with a text input. This is where your users can enter their email.</p>
+<pre class="ui message">
+<code class="html">&lt;form&gt;
+  &lt;input type="text"&gt;
+&lt;/form&gt;</code></pre>
+          <p>Give the text input the name "email".</p>
+<pre class="ui message">
+<code class="html">&lt;form&gt;
+  &lt;input type="email" name="email"&gt;
+&lt;/form&gt;</code></pre>
+          <p>Define the form action as the new data store URL. This tells the form where to send the users check-in information.</p>
+<pre class="ui message">
+<code class="html">&lt;form action="http://api.decoded.co/store/your-app-name/"&gt;
+  &lt;input type="text" name="email"&gt;
+&lt;/form&gt;</code></pre>
+      <p>You can then add as many input fields to this form as you like.</p>
         </section>
       </div>
     </div><!-- end container -->

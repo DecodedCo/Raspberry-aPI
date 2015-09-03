@@ -44,29 +44,40 @@ module.exports = function setupCheckins(app, errorHandler) {
 
   // When a store request comes in,
   function storeListener(req, res) {
+    // Get the URL
     var reqUrl = url.parse(req.url, true),
+      // The folder name becomes the database name.
       dbName = getDbName(reqUrl),
       storeNewCallback = true,
       key, rawVal, val, id, data;
 
-    if (req.query.id) {
-      id = req.query.id;
-      delete req.query.id;
-      data = store.get(dbName, id) || {id: id};
-
-      if (Object.keys(req.query).length > 0) {
+      //If query parameters have been sent...
+    if (Object.keys(req.query).length > 0) {
+        // Get the ID from the URL if one exists
+        if (req.query.id) {
+          // Define the ID
+          id = req.query.id;
+          // Remove the ID from memory
+          delete req.query.id;
+        } else {
+          //if no id was sent, set the id to the current timestamp
+          id = Date.now();
+        }
+        // If only the ID is present, look up the entry with that ID
+        data = store.get(dbName, id) || {};
+        // For each of the items provided,
         for (key in req.query) {
+          // Turn each item in to a true/false/number/string
           data[key] = parseValue(req.query[key]);
         }
-
-        data.updated = Date.now();
-      }
-
-      store.save(dbName, id, data);
-      res.jsonp(data);
+        // Store the data
+        store.save(dbName, id, data);
+        res.jsonp(data);
+    //no query parameters, so return the database
     } else {
       res.jsonp(store.get(dbName));
     }
+
   }
 
   app.all('/store*', storeListener);

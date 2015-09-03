@@ -120,6 +120,8 @@ pre {
 	background: rgb(254,248,0);
 	background: rgba(254,248,0,.5);
 	color: #333;
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 
 .ui.yellow.button:hover {
