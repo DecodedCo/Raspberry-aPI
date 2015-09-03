@@ -66,4 +66,4 @@ arbitrary(app, errorHandler);
 app.use(express.static(path.join(__dirname, '/public')));
 
 // listen to 80 on the Pi
-app.listen(3000);
+app.listen(80);
