@@ -21,7 +21,7 @@
     "url": "git://github.com/DecodedCo/api.decoded.co.git"
   },
   "author": "Decoded",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/DecodedCo/api.decoded.co/issues"
   }
